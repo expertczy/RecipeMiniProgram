@@ -1,0 +1,40 @@
+<navigation-bar title="菜品详情" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<view class="container">
+  <view class="dish-card">
+    <view class="dish-info">
+      <text class="dish-name">{{dish.name}}</text>
+    </view>
+  </view>
+  
+  <view class="dish-card">
+    <view class="card-title">食材</view>
+    <view class="card-content">
+      <textarea 
+        class="edit-area" 
+        value="{{dish.ingredients}}" 
+        placeholder="请输入食材清单" 
+        bindinput="onIngredientsChange"
+      ></textarea>
+    </view>
+  </view>
+
+  <view class="dish-card">
+    <view class="card-title">步骤</view>
+    <view class="card-content">
+      <textarea 
+        class="edit-area" 
+        value="{{dish.steps}}" 
+        placeholder="请输入烹饪步骤" 
+        bindinput="onStepsChange"
+      ></textarea>
+    </view>
+  </view>
+
+  <view class="dish-card">
+    <button class="save-button" bindtap="saveDish">保存</button>
+  </view>
+
+  <view class="dish-card">
+    <button class="delete-button" bindtap="deleteDish">删除</button>
+  </view>
+</view>

@@ -1,0 +1,31 @@
+<navigation-bar title="我们的菜谱" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <!-- Add dish form -->
+    <view class="form">
+      <view class="input-row">
+        <input class="input" placeholder="输入菜品名称" bindinput="onInputChange" value="{{newDishName}}"/>
+        <button class="image-button" bindtap="selectImage">
+          <view class="icon-wrapper">
+            <image class="user-icon" src="{{selectedImage || '/images/Ricky.jpg'}}"></image>
+          </view>
+        </button>
+        <button class="add-button" bindtap="addDish">+</button>
+      </view>
+    </view>
+    
+    <!-- Dishes list -->
+    <view class="dishes-list">
+      <view wx:for="{{dishes}}" wx:key="id" class="dish-item" bindtap="navigateToDetail" data-id="{{item.id}}">
+        <view class="dish-content">
+          <text class="dish-name">{{item.name}}</text>
+        </view>
+        <image 
+          class="delete-btn" 
+          src="{{item.image}}" 
+          mode="aspectFill"
+        ></image>
+      </view>
+    </view>
+  </view>
+</scroll-view>
