@@ -12,13 +12,17 @@ page {
 
 .container {
   padding: 20rpx;
+  width: 100%;
   height: auto;
-  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .form {
   width: 100%;
-  padding: 30rpx;
+  padding: 20rpx;
   box-sizing: border-box;
   background: white;
   border-radius: 16rpx;
@@ -83,7 +87,11 @@ page {
 
 .dishes-list {
   width: 100%;
+  max-width: 750rpx;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .dish-item {
@@ -147,5 +155,27 @@ page {
 }
 
 .sync-button::after {
+  border: none;
+}
+
+.api-button {
+  margin-top: 20rpx;
+  width: 100% !important;
+  height: 80rpx;
+  font-size: 28rpx;
+  background: #1890ff !important;
+  color: white;
+  border-radius: 8rpx;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.api-button.loading {
+  background: #91caff !important;
+  opacity: 0.7;
+}
+
+.api-button::after {
   border: none;
 }

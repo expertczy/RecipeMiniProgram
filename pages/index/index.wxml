@@ -12,6 +12,14 @@
         </button>
         <button class="add-button" bindtap="addDish">+</button>
       </view>
+      <!-- New API button -->
+      <button 
+        class="api-button {{isLoading ? 'loading' : ''}}" 
+        bindtap="addDishWithApi"
+        disabled="{{isLoading}}"
+      >
+        {{isLoading ? '添加中...' : '使用API添加'}}
+      </button>
     </view>
     
     <!-- Dishes list -->

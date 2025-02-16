@@ -14,6 +14,7 @@
         value="{{dish.ingredients}}" 
         placeholder="请输入食材清单" 
         bindinput="onIngredientsChange"
+        disabled="{{isLoading}}"
       ></textarea>
     </view>
   </view>
@@ -26,15 +27,20 @@
         value="{{dish.steps}}" 
         placeholder="请输入烹饪步骤" 
         bindinput="onStepsChange"
+        disabled="{{isLoading}}"
       ></textarea>
     </view>
   </view>
 
   <view class="dish-card">
-    <button class="save-button" bindtap="saveDish">保存</button>
+    <button class="save-button" bindtap="saveDish" disabled="{{isLoading}}">
+      {{isLoading ? '保存中...' : '保存'}}
+    </button>
   </view>
 
   <view class="dish-card">
-    <button class="delete-button" bindtap="deleteDish">删除</button>
+    <button class="delete-button" bindtap="deleteDish" disabled="{{isLoading}}">
+      {{isLoading ? '删除中...' : '删除'}}
+    </button>
   </view>
 </view>
