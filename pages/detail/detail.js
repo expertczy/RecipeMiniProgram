@@ -28,6 +28,11 @@ Page({
         throw new Error('菜品不存在')
       }
 
+      // Ensure dish has a type property, default to 'meat' if not set
+      if (!dish.type) {
+        dish.type = 'meat'
+      }
+
       this.setData({ 
         dish,
         isLoading: false
@@ -54,6 +59,12 @@ Page({
     this.setData({ dish })
   },
 
+  onTypeSelect(e) {
+    const dish = { ...this.data.dish }
+    dish.type = e.currentTarget.dataset.type
+    this.setData({ dish })
+  },
+
   async saveDish() {
     if (!this.data.dish || !this.data.dish.id) {
       wx.showToast({
@@ -72,7 +83,8 @@ Page({
         name: this.data.dish.name,
         ingredients: this.data.dish.ingredients,
         steps: this.data.dish.steps,
-        image: this.data.dish.image
+        image: this.data.dish.image,
+        type: this.data.dish.type
       }
 
       await api.updateDish(this.data.dish.id, updatePayload)

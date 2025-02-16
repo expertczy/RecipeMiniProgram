@@ -4,6 +4,22 @@
     <view class="dish-info">
       <text class="dish-name">{{dish.name}}</text>
     </view>
+    <view class="type-selector">
+      <view 
+        class="type-option {{dish.type === 'veg' ? 'selected' : ''}}" 
+        bindtap="onTypeSelect" 
+        data-type="veg"
+      >
+        <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
+      </view>
+      <view 
+        class="type-option {{dish.type === 'meat' ? 'selected' : ''}}" 
+        bindtap="onTypeSelect" 
+        data-type="meat"
+      >
+        <image class="type-icon" src="/images/chicken.png" mode="aspectFit"></image>
+      </view>
+    </view>
   </view>
   
   <view class="dish-card">

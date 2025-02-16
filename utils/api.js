@@ -36,7 +36,8 @@ export const api = {
         name: dish.name,
         image: dish.image,
         ingredients: "",
-        steps: ""
+        steps: "",
+        type: "",
       }
 
       console.log('Sending to API:', cleanDish)
@@ -66,21 +67,35 @@ export const api = {
 
   updateDish(id, dish) {
     return new Promise((resolve, reject) => {
+      const cleanDish = {
+        name: dish.name,
+        image: dish.image,
+        ingredients: dish.ingredients,
+        steps: dish.steps,
+        type: dish.type
+      }
+
+      console.log('Updating dish:', cleanDish)
+
       wx.request({
         url: `${API_ENDPOINT}/dishes/${id}`,
         method: 'PUT',
-        data: dish,
         header: {
           'Content-Type': 'application/json'
         },
+        data: cleanDish,
         success: (res) => {
+          console.log('Update Dish Response:', res)
           if (res.statusCode === 200) {
-            resolve(res.data)
+            resolve(res.data.dish || res.data)
           } else {
             reject(new Error(`HTTP Error: ${res.statusCode}`))
           }
         },
-        fail: reject
+        fail: (error) => {
+          console.error('Update Dish Failed:', error)
+          reject(error)
+        }
       })
     })
   },
