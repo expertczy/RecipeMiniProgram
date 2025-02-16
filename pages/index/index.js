@@ -7,7 +7,8 @@ Page({
     newDishName: '',
     selectedImage: '',
     dishes: [],
-    isLoading: false
+    isLoading: false,
+    useExpertImage: false  // New flag to track which image to use
   },
 
   async loadDishes() {
@@ -80,6 +81,20 @@ Page({
     })
   },
 
+  toggleImage() {
+    wx.showActionSheet({
+      itemList: ['Ricky', '砖家'],
+      success: (res) => {
+        this.setData({
+          useExpertImage: res.tapIndex === 1  // 0 for Ricky, 1 for Expert
+        })
+      },
+      fail: (res) => {
+        console.log(res.errMsg)
+      }
+    })
+  },
+
   async addDishWithApi() {
     if (!this.data.newDishName.trim()) {
       wx.showToast({
@@ -94,7 +109,7 @@ Page({
     try {
       const newDish = {
         name: this.data.newDishName.trim(),
-        image: "https://example.com/default.jpg",  // Using a URL instead of local path
+        image: this.data.useExpertImage ? '/images/expert.jpg' : '/images/Ricky.jpg',
         ingredients: "",
         steps: ""
       }
@@ -106,7 +121,8 @@ Page({
       
       this.setData({
         newDishName: '',
-        selectedImage: ''
+        selectedImage: '',
+        useExpertImage: !this.data.useExpertImage  // Toggle the image flag
       })
 
       wx.showToast({

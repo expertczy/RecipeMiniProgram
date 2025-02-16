@@ -5,21 +5,15 @@
     <view class="form">
       <view class="input-row">
         <input class="input" placeholder="输入菜品名称" bindinput="onInputChange" value="{{newDishName}}"/>
-        <button class="image-button" bindtap="selectImage">
+        <button class="image-button" bindtap="toggleImage">
           <view class="icon-wrapper">
-            <image class="user-icon" src="{{selectedImage || '/images/Ricky.jpg'}}"></image>
+            <image class="user-icon" src="{{useExpertImage ? '/images/expert.jpg' : '/images/Ricky.jpg'}}"></image>
           </view>
         </button>
-        <button class="add-button" bindtap="addDish">+</button>
+        <button class="add-button {{isLoading ? 'loading' : ''}}" bindtap="addDishWithApi" disabled="{{isLoading}}">
+          {{isLoading ? '...' : '+'}}
+        </button>
       </view>
-      <!-- New API button -->
-      <button 
-        class="api-button {{isLoading ? 'loading' : ''}}" 
-        bindtap="addDishWithApi"
-        disabled="{{isLoading}}"
-      >
-        {{isLoading ? '添加中...' : '使用API添加'}}
-      </button>
     </view>
     
     <!-- Dishes list -->
