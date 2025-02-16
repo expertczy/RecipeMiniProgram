@@ -1,21 +1,12 @@
-import { api } from '../../utils/api'
-
 Page({
   data: {
     dish: null
   },
 
-  async onLoad(options) {
-    try {
-      const dishes = await api.getDishes()
-      const dish = dishes.find(d => d.id === options.id)
-      this.setData({ dish })
-    } catch (error) {
-      wx.showToast({
-        title: '加载失败',
-        icon: 'none'
-      })
-    }
+  onLoad(options) {
+    const dishes = wx.getStorageSync('dishes') || []
+    const dish = dishes.find(d => d.id === options.id)
+    this.setData({ dish })
   },
 
   onIngredientsChange(e) {
@@ -30,44 +21,40 @@ Page({
     })
   },
 
-  async saveDish() {
-    try {
-      await api.updateDish(this.data.dish.id, this.data.dish)
+  saveDish() {
+    const dishes = wx.getStorageSync('dishes') || []
+    const index = dishes.findIndex(d => d.id === this.data.dish.id)
+    
+    if (index > -1) {
+      dishes[index] = this.data.dish
+      wx.setStorageSync('dishes', dishes)
       wx.showToast({
         title: '保存成功',
         icon: 'success',
         duration: 1500
       })
-    } catch (error) {
-      wx.showToast({
-        title: '保存失败',
-        icon: 'none'
-      })
     }
   },
 
-  async deleteDish() {
+  deleteDish() {
     wx.showModal({
       title: '确认删除',
       content: '确定要删除这道菜吗？',
-      success: async (res) => {
+      success: (res) => {
         if (res.confirm) {
-          try {
-            await api.deleteDish(this.data.dish.id)
-            wx.showToast({
-              title: '已删除',
-              icon: 'success',
-              duration: 1500
-            })
-            setTimeout(() => {
-              wx.navigateBack()
-            }, 1500)
-          } catch (error) {
-            wx.showToast({
-              title: '删除失败',
-              icon: 'none'
-            })
-          }
+          const dishes = wx.getStorageSync('dishes') || []
+          const updatedDishes = dishes.filter(d => d.id !== this.data.dish.id)
+          wx.setStorageSync('dishes', updatedDishes)
+          
+          wx.showToast({
+            title: '已删除',
+            icon: 'success',
+            duration: 1500
+          })
+          
+          setTimeout(() => {
+            wx.navigateBack()
+          }, 1500)
         }
       }
     })

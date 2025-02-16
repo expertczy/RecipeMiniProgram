@@ -1,5 +1,4 @@
 // index.js
-import { api } from '../../utils/api'
 
 Page({
   data: {
@@ -49,9 +48,11 @@ Page({
 
     const dishes = wx.getStorageSync('dishes') || []
     const newDish = {
-      id: Date.now().toString(), // Generate a unique ID
+      id: Date.now().toString(),
       name: this.data.newDishName,
-      image: this.data.selectedImage || '/images/Ricky.jpg'
+      image: this.data.selectedImage || '/images/Ricky.jpg',
+      ingredients: '',
+      steps: ''
     }
 
     dishes.push(newDish)
@@ -67,23 +68,6 @@ Page({
       title: '添加成功',
       icon: 'success'
     })
-  },
-
-  async deleteDish(e) {
-    const { id } = e.currentTarget.dataset
-    try {
-      await api.deleteDish(id)
-      await this.loadDishes()
-      wx.showToast({
-        title: '已删除',
-        icon: 'success'
-      })
-    } catch (error) {
-      wx.showToast({
-        title: '删除失败',
-        icon: 'none'
-      })
-    }
   },
 
   navigateToDetail(e) {
