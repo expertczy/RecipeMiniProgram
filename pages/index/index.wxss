@@ -63,9 +63,9 @@ page {
 }
 
 .user-icon {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 8rpx;
 }
 
 .add-button {
@@ -110,6 +110,9 @@ page {
 .dish-content {
   flex: 1;
   margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
 }
 
 .dish-name {
@@ -180,4 +183,16 @@ page {
 
 .api-button::after {
   border: none;
+}
+
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: 40rpx;
+}
+
+.type-icon {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 8rpx;
 }

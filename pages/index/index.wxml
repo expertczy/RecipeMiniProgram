@@ -20,10 +20,16 @@
     <view class="dishes-list">
       <view wx:for="{{dishes}}" wx:key="id" class="dish-item" bindtap="navigateToDetail" data-id="{{item.id}}">
         <view class="dish-content">
+          <image 
+            wx:if="{{item.type}}"
+            class="type-icon" 
+            src="/images/{{item.type}}.png" 
+            mode="aspectFit"
+          ></image>
           <text class="dish-name">{{item.name}}</text>
         </view>
         <image 
-          class="delete-btn" 
+          class="user-icon" 
           src="{{item.image}}" 
           mode="aspectFill"
         ></image>

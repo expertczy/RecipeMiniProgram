@@ -1,27 +1,82 @@
 <navigation-bar title="" back="{{true}}" color="black" background="#FFF"></navigation-bar>
 <view class="container">
+  <!-- Dish Name Card -->
   <view class="dish-card">
     <view class="dish-info">
       <text class="dish-name">{{dish.name}}</text>
     </view>
+  </view>
+
+  <!-- Dish Type Card -->
+  <view class="dish-card">
     <view class="type-selector">
-      <view 
-        class="type-option {{dish.type === 'veg' ? 'selected' : ''}}" 
-        bindtap="onTypeSelect" 
-        data-type="veg"
-      >
-        <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
+      <!-- First line: Meat options -->
+      <view class="type-row">
+        <view 
+          class="type-option {{dish.type === 'beef' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="beef"
+        >
+          <image class="type-icon" src="/images/beef.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'chicken' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="chicken"
+        >
+          <image class="type-icon" src="/images/chicken.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'pork' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="pork"
+        >
+          <image class="type-icon" src="/images/pork.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'seafood' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="seafood"
+        >
+          <image class="type-icon" src="/images/seafood.png" mode="aspectFit"></image>
+        </view>
       </view>
-      <view 
-        class="type-option {{dish.type === 'meat' ? 'selected' : ''}}" 
-        bindtap="onTypeSelect" 
-        data-type="meat"
-      >
-        <image class="type-icon" src="/images/chicken.png" mode="aspectFit"></image>
+
+      <!-- Second line: Vegetable, Soup, Dessert, Blank -->
+      <view class="type-row">
+        <view 
+          class="type-option {{dish.type === 'vegetable' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="vegetable"
+        >
+          <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'soup' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="soup"
+        >
+          <image class="type-icon" src="/images/soup.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'dessert' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="dessert"
+        >
+          <image class="type-icon" src="/images/dessert.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{!dish.type ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type=""
+        >
+          <image class="type-icon" src="/images/blank.png" mode="aspectFit"></image>
+        </view>
       </view>
     </view>
   </view>
-  
+
+  <!-- Rest of the cards -->
   <view class="dish-card">
     <view class="card-title">食材</view>
     <view class="card-content">
@@ -49,14 +104,13 @@
   </view>
 
   <view class="dish-card">
-    <button class="save-button" bindtap="saveDish" disabled="{{isLoading}}">
-      {{isLoading ? '保存中...' : '保存'}}
-    </button>
-  </view>
-
-  <view class="dish-card">
-    <button class="delete-button" bindtap="deleteDish" disabled="{{isLoading}}">
-      {{isLoading ? '删除中...' : '删除'}}
-    </button>
+    <view class="button-row">
+      <button class="save-button" bindtap="saveDish" disabled="{{isLoading}}">
+        {{isLoading ? '保存中...' : '保存'}}
+      </button>
+      <button class="delete-button" bindtap="deleteDish" disabled="{{isLoading}}">
+        {{isLoading ? '删除中...' : '删除'}}
+      </button>
+    </view>
   </view>
 </view>
