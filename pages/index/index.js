@@ -13,39 +13,18 @@ Page({
 
   async loadDishes() {
     this.setData({ isLoading: true })
-    
-    // First load from local storage to show something immediately
-    const localDishes = wx.getStorageSync('dishes') || []
-    this.setData({ dishes: localDishes })
-
     try {
-      console.log('Fetching dishes from API...')
-      const apiDishes = await api.getDishes()
-      console.log('API dishes received:', apiDishes)
-
-      if (Array.isArray(apiDishes) && apiDishes.length > 0) {
-        // Sort dishes by createdAt in descending order (newest first)
-        const sortedDishes = apiDishes.sort((a, b) => 
-          new Date(b.createdAt) - new Date(a.createdAt)
-        )
-
-        console.log('Sorted dishes:', sortedDishes)
-
-        // Update both state and local storage
-        this.setData({ dishes: sortedDishes })
-        wx.setStorageSync('dishes', sortedDishes)
-      }
+      const dishes = await api.getDishes()
+      this.setData({ 
+        dishes,
+        isLoading: false 
+      })
     } catch (error) {
-      console.error('Error loading dishes from API:', error)
-      
-      if (!localDishes.length) {
-        wx.showToast({
-          title: '加载失败',
-          icon: 'none',
-          duration: 2000
-        })
-      }
-    } finally {
+      console.error('Error loading dishes:', error)
+      wx.showToast({
+        title: '加载失败',
+        icon: 'error'
+      })
       this.setData({ isLoading: false })
     }
   },
@@ -109,7 +88,7 @@ Page({
     try {
       const newDish = {
         name: this.data.newDishName.trim(),
-        image: this.data.useExpertImage ? '/images/expert.jpg' : '/images/Ricky.jpg',
+        image: this.data.useExpertImage ? '/images/EXPERT.jpg' : '/images/Ricky.jpg',
         ingredients: "",
         steps: ""
       }
