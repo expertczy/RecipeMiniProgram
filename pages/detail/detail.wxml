@@ -1,4 +1,4 @@
-<navigation-bar title="菜品详情" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<navigation-bar title="" back="{{true}}" color="black" background="#FFF"></navigation-bar>
 <view class="container">
   <view class="dish-card">
     <view class="dish-info">

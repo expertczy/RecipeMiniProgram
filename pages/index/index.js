@@ -121,8 +121,7 @@ Page({
       
       this.setData({
         newDishName: '',
-        selectedImage: '',
-        useExpertImage: !this.data.useExpertImage  // Toggle the image flag
+        selectedImage: ''
       })
 
       wx.showToast({
