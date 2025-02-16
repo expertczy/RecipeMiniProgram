@@ -34,15 +34,15 @@
           <image class="type-icon" src="/images/pork.png" mode="aspectFit"></image>
         </view>
         <view 
-          class="type-option {{dish.type === 'seafood' ? 'selected' : ''}}" 
+          class="type-option {{dish.type === 'sheep' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
-          data-type="seafood"
+          data-type="sheep"
         >
-          <image class="type-icon" src="/images/seafood.png" mode="aspectFit"></image>
+          <image class="type-icon" src="/images/sheep.png" mode="aspectFit"></image>
         </view>
       </view>
 
-      <!-- Second line: Vegetable, Soup, Dessert, Blank -->
+      <!-- Second line: Vegetable, Soup, Dessert, Seafood -->
       <view class="type-row">
         <view 
           class="type-option {{dish.type === 'vegetable' ? 'selected' : ''}}" 
@@ -66,11 +66,11 @@
           <image class="type-icon" src="/images/dessert.png" mode="aspectFit"></image>
         </view>
         <view 
-          class="type-option {{!dish.type ? 'selected' : ''}}" 
+          class="type-option {{dish.type === 'seafood' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
-          data-type=""
+          data-type="seafood"
         >
-          <image class="type-icon" src="/images/blank.png" mode="aspectFit"></image>
+          <image class="type-icon" src="/images/seafood.png" mode="aspectFit"></image>
         </view>
       </view>
     </view>
