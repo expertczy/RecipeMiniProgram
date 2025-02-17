@@ -33,6 +33,7 @@ page {
   display: flex;
   gap: 20rpx;
   align-items: center;
+  min-height: 80rpx;
 }
 
 .input {
@@ -52,20 +53,36 @@ page {
   display: flex !important;
   align-items: center;
   justify-content: center;
-  background: transparent !important;
+  background: #f5f5f5 !important;
+  border-radius: 8rpx;
 }
 
 .icon-wrapper {
-  width: 100%;
-  height: 100%;
-  border-radius: 8rpx;
-  overflow: hidden;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
 }
 
-.user-icon {
+/* Separate styles for dish card user icon */
+.dish-item .user-icon {
   width: 80rpx;
   height: 80rpx;
   border-radius: 8rpx;
+  object-fit: cover;
+}
+
+/* Search and filter card icons */
+.input-row .user-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-button::after {
+  border: none;
 }
 
 .add-button {
@@ -195,4 +212,103 @@ page {
   width: 70rpx;
   height: 70rpx;
   border-radius: 8rpx;
+}
+
+.filter-button {
+  width: 80rpx !important;
+  height: 80rpx;
+  padding: 16rpx !important;
+  margin: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5 !important;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+}
+
+.filter-button::after, .surprise-button::after {
+  border: none;
+}
+
+.filter-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.surprise-button {
+  font-size: 40rpx;
+}
+
+/* Type filter popup styles */
+.type-filter-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.type-filter-content {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  width: 80%;
+  max-width: 600rpx;
+}
+
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.type-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.type-option.selected {
+  background-color: #f0f0f0;
+  border-radius: 8rpx;
+}
+
+.clear-button {
+  width: 100% !important;
+  height: 80rpx;
+  background: #f5f5f5 !important;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.clear-button::after {
+  border: none;
+}
+
+.back-button-container {
+  padding: 20rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.back-button {
+  background-color: #007AFF;
+  color: white;
+  padding: 20rpx 40rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
 }

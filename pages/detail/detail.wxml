@@ -1,21 +1,18 @@
 <navigation-bar title="" back="{{true}}" color="black" background="#FFF"></navigation-bar>
 <view class="container">
-  <!-- Dish Name Card -->
+  <!-- First Dish Card -->
   <view class="dish-card">
     <view class="dish-info">
       <text class="dish-name">{{dish.name}}</text>
+      <text class="dish-type">(主菜)</text>
     </view>
-  </view>
-
-  <!-- Dish Type Card -->
-  <view class="dish-card">
     <view class="type-selector">
-      <!-- First line: Meat options -->
       <view class="type-row">
         <view 
           class="type-option {{dish.type === 'beef' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
           data-type="beef"
+          data-target="dish"
         >
           <image class="type-icon" src="/images/beef.png" mode="aspectFit"></image>
         </view>
@@ -23,6 +20,7 @@
           class="type-option {{dish.type === 'chicken' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
           data-type="chicken"
+          data-target="dish"
         >
           <image class="type-icon" src="/images/chicken.png" mode="aspectFit"></image>
         </view>
@@ -30,6 +28,7 @@
           class="type-option {{dish.type === 'pork' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
           data-type="pork"
+          data-target="dish"
         >
           <image class="type-icon" src="/images/pork.png" mode="aspectFit"></image>
         </view>
@@ -37,6 +36,7 @@
           class="type-option {{dish.type === 'sheep' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
           data-type="sheep"
+          data-target="dish"
         >
           <image class="type-icon" src="/images/sheep.png" mode="aspectFit"></image>
         </view>
@@ -48,6 +48,7 @@
           class="type-option {{dish.type === 'vegetable' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
           data-type="vegetable"
+          data-target="dish"
         >
           <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
         </view>
@@ -55,6 +56,7 @@
           class="type-option {{dish.type === 'soup' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
           data-type="soup"
+          data-target="dish"
         >
           <image class="type-icon" src="/images/soup.png" mode="aspectFit"></image>
         </view>
@@ -62,6 +64,7 @@
           class="type-option {{dish.type === 'dessert' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
           data-type="dessert"
+          data-target="dish"
         >
           <image class="type-icon" src="/images/dessert.png" mode="aspectFit"></image>
         </view>
@@ -69,8 +72,29 @@
           class="type-option {{dish.type === 'seafood' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
           data-type="seafood"
+          data-target="dish"
         >
           <image class="type-icon" src="/images/seafood.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Second Dish Card (if exists) -->
+  <view class="dish-card" wx:if="{{secondDish}}">
+    <view class="dish-info">
+      <text class="dish-name">{{secondDish.name}}</text>
+      <text class="dish-type">(配菜)</text>
+    </view>
+    <view class="type-selector">
+      <view class="type-row">
+        <view 
+          class="type-option {{secondDish.type === 'vegetable' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="vegetable"
+          data-target="secondDish"
+        >
+          <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
         </view>
       </view>
     </view>

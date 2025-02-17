@@ -3,6 +3,7 @@ import { api } from '../../utils/api.js'
 Page({
   data: {
     dish: null,
+    secondDish: null,
     isLoading: false
   },
 
@@ -15,10 +16,14 @@ Page({
       return
     }
 
-    this.loadDish(options.id)
+    // Load both dishes if secondId is provided
+    await Promise.all([
+      this.loadDish(options.id, 'dish'),
+      options.secondId ? this.loadDish(options.secondId, 'secondDish') : Promise.resolve()
+    ])
   },
 
-  async loadDish(id) {
+  async loadDish(id, targetField = 'dish') {
     this.setData({ isLoading: true })
     try {
       const dishes = await api.getDishes()
@@ -33,8 +38,9 @@ Page({
         dish.type = 'meat'
       }
 
+      // Use dynamic field name to update either dish or secondDish
       this.setData({ 
-        dish,
+        [targetField]: dish,
         isLoading: false
       })
     } catch (error) {

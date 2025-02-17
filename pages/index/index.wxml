@@ -15,10 +15,31 @@
         </button>
       </view>
     </view>
+
+    <!-- Search and Filter Card -->
+    <view class="form">
+      <view class="input-row">
+        <input class="input" placeholder="搜索菜品" bindinput="onSearchInput" value="{{searchText}}"/>
+        <button class="image-button" bindtap="showTypeFilter">
+          <view class="icon-wrapper">
+            <image 
+              class="user-icon" 
+              src="{{selectedType ? '/images/' + selectedType + '.png' : '/images/filter.png'}}" 
+              mode="{{selectedType ? 'aspectFit' : 'aspectFill'}}"
+            ></image>
+          </view>
+        </button>
+        <button class="image-button" bindtap="surpriseMe">
+          <view class="icon-wrapper">
+            🎲
+          </view>
+        </button>
+      </view>
+    </view>
     
     <!-- Dishes list -->
     <view class="dishes-list">
-      <view wx:for="{{dishes}}" wx:key="id" class="dish-item" bindtap="navigateToDetail" data-id="{{item.id}}">
+      <view wx:for="{{filteredDishes}}" wx:key="id" class="dish-item" bindtap="navigateToDetail" data-id="{{item.id}}">
         <view class="dish-content">
           <image 
             wx:if="{{item.type}}"
@@ -33,6 +54,114 @@
           src="{{item.image}}" 
           mode="aspectFill"
         ></image>
+      </view>
+    </view>
+
+    <!-- Type Filter Popup -->
+    <view class="type-filter-popup" wx:if="{{showTypeFilter}}" bindtap="hideTypeFilter">
+      <view class="type-filter-content" catchtap="stopPropagation">
+        <view class="type-grid">
+          <!-- First row: Meat options -->
+          <view 
+            class="type-option {{selectedType === 'beef' ? 'selected' : ''}}"
+            bindtap="onTypeSelect"
+            data-type="beef"
+          >
+            <image class="type-icon" src="/images/beef.png" mode="aspectFit"></image>
+          </view>
+          <view 
+            class="type-option {{selectedType === 'chicken' ? 'selected' : ''}}"
+            bindtap="onTypeSelect"
+            data-type="chicken"
+          >
+            <image class="type-icon" src="/images/chicken.png" mode="aspectFit"></image>
+          </view>
+          <view 
+            class="type-option {{selectedType === 'pork' ? 'selected' : ''}}"
+            bindtap="onTypeSelect"
+            data-type="pork"
+          >
+            <image class="type-icon" src="/images/pork.png" mode="aspectFit"></image>
+          </view>
+          <view 
+            class="type-option {{selectedType === 'sheep' ? 'selected' : ''}}"
+            bindtap="onTypeSelect"
+            data-type="sheep"
+          >
+            <image class="type-icon" src="/images/sheep.png" mode="aspectFit"></image>
+          </view>
+          <!-- Second row: Other options -->
+          <view 
+            class="type-option {{selectedType === 'vegetable' ? 'selected' : ''}}"
+            bindtap="onTypeSelect"
+            data-type="vegetable"
+          >
+            <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
+          </view>
+          <view 
+            class="type-option {{selectedType === 'soup' ? 'selected' : ''}}"
+            bindtap="onTypeSelect"
+            data-type="soup"
+          >
+            <image class="type-icon" src="/images/soup.png" mode="aspectFit"></image>
+          </view>
+          <view 
+            class="type-option {{selectedType === 'dessert' ? 'selected' : ''}}"
+            bindtap="onTypeSelect"
+            data-type="dessert"
+          >
+            <image class="type-icon" src="/images/dessert.png" mode="aspectFit"></image>
+          </view>
+          <view 
+            class="type-option {{selectedType === 'seafood' ? 'selected' : ''}}"
+            bindtap="onTypeSelect"
+            data-type="seafood"
+          >
+            <image class="type-icon" src="/images/seafood.png" mode="aspectFit"></image>
+          </view>
+        </view>
+        <!-- Clear button -->
+        <button class="clear-button" bindtap="onTypeSelect" data-type="">清除选项</button>
+      </view>
+    </view>
+
+    <!-- Add Go Back button when showing surprise dishes -->
+    <view wx:if="{{filteredDishes.length === 2}}" class="back-button-container">
+      <button class="back-button" bindtap="resetDishes">返回全部菜品</button>
+    </view>
+
+    <!-- Add dish card -->
+    <view class="add-dish-card" wx:if="{{showAddCard}}">
+      <input class="dish-input" placeholder="输入菜品名称" value="{{newDishName}}" bindinput="onDishNameInput" />
+      
+      <view class="type-selector-add">
+        <view class="type-row">
+          <view class="type-option {{newDishType === 'beef' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="beef">
+            <image class="type-icon" src="/images/beef.png" mode="aspectFit"></image>
+          </view>
+          <view class="type-option {{newDishType === 'chicken' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="chicken">
+            <image class="type-icon" src="/images/chicken.png" mode="aspectFit"></image>
+          </view>
+          <view class="type-option {{newDishType === 'pork' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="pork">
+            <image class="type-icon" src="/images/pork.png" mode="aspectFit"></image>
+          </view>
+        </view>
+        <view class="type-row">
+          <view class="type-option {{newDishType === 'sheep' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="sheep">
+            <image class="type-icon" src="/images/sheep.png" mode="aspectFit"></image>
+          </view>
+          <view class="type-option {{newDishType === 'vegetable' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="vegetable">
+            <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
+          </view>
+          <view class="type-option {{newDishType === 'soup' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="soup">
+            <image class="type-icon" src="/images/soup.png" mode="aspectFit"></image>
+          </view>
+        </view>
+      </view>
+
+      <view class="button-group">
+        <button class="cancel-button" bindtap="cancelAdd">取消</button>
+        <button class="confirm-button" bindtap="confirmAdd">确认</button>
       </view>
     </view>
   </view>
