@@ -1,11 +1,14 @@
 <navigation-bar title="" back="{{true}}" color="black" background="#FFF"></navigation-bar>
 <view class="container">
-  <!-- First Dish Card -->
+  <!-- Name Card -->
   <view class="dish-card">
     <view class="dish-info">
       <text class="dish-name">{{dish.name}}</text>
-      <text class="dish-type">(主菜)</text>
     </view>
+  </view>
+
+  <!-- Type Card -->
+  <view class="dish-card">
     <view class="type-selector">
       <view class="type-row">
         <view 
@@ -42,7 +45,6 @@
         </view>
       </view>
 
-      <!-- Second line: Vegetable, Soup, Dessert, Seafood -->
       <view class="type-row">
         <view 
           class="type-option {{dish.type === 'vegetable' ? 'selected' : ''}}" 

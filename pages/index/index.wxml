@@ -5,6 +5,15 @@
     <view class="form">
       <view class="input-row">
         <input class="input" placeholder="输入菜品名称" bindinput="onInputChange" value="{{newDishName}}"/>
+        <button class="image-button" bindtap="showTypeFilterForAdd">
+          <view class="icon-wrapper">
+            <image 
+              class="user-icon" 
+              src="{{newDishType ? '/images/' + newDishType + '.png' : '/images/filter.png'}}" 
+              mode="{{newDishType ? 'aspectFit' : 'aspectFill'}}"
+            ></image>
+          </view>
+        </button>
         <button class="image-button" bindtap="toggleImage">
           <view class="icon-wrapper">
             <image class="user-icon" src="{{useExpertImage ? '/images/EXPERT.jpg' : '/images/Ricky.jpg'}}"></image>

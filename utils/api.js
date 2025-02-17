@@ -37,7 +37,7 @@ export const api = {
         image: dish.image,
         ingredients: "",
         steps: "",
-        type: "",
+        type: dish.type,
       }
 
       console.log('Sending to API:', cleanDish)

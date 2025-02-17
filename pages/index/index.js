@@ -12,7 +12,9 @@ Page({
     searchText: '',
     showTypeFilter: false,
     selectedType: '',
-    filteredDishes: []  // Initialize empty
+    filteredDishes: [],  // Initialize empty
+    newDishType: '',
+    isAddingDish: false,
   },
 
   async loadDishes() {
@@ -94,32 +96,31 @@ Page({
       const newDish = {
         name: this.data.newDishName.trim(),
         image: this.data.useExpertImage ? '/images/EXPERT.jpg' : '/images/Ricky.jpg',
-        ingredients: "",
-        steps: ""
+        type: this.data.newDishType || "",  // Include the selected type
       }
 
-      console.log('Sending dish data:', newDish)
       const result = await api.addDish(newDish)
-      
-      await this.loadDishes()
-      
+      console.log('Added dish:', result)
+
       this.setData({
         newDishName: '',
-        selectedImage: ''
+        newDishType: '',  // Reset the type after successful add
+        isLoading: false
       })
+
+      this.loadDishes()
 
       wx.showToast({
         title: '添加成功',
         icon: 'success'
       })
     } catch (error) {
-      console.error('Error details:', error)
+      console.error('Failed to add dish:', error)
+      this.setData({ isLoading: false })
       wx.showToast({
         title: '添加失败',
         icon: 'error'
       })
-    } finally {
-      this.setData({ isLoading: false })
     }
   },
 
@@ -149,13 +150,28 @@ Page({
     e.stopPropagation();
   },
 
+  showTypeFilterForAdd() {
+    this.setData({ 
+      showTypeFilter: true,
+      isAddingDish: true
+    })
+  },
+
   onTypeSelect(e) {
     const type = e.currentTarget.dataset.type
-    this.setData({ 
-      selectedType: type,
-      showTypeFilter: false 
-    })
-    this.filterDishes()
+    if (this.data.isAddingDish) {
+      this.setData({ 
+        newDishType: type,
+        showTypeFilter: false,
+        isAddingDish: false
+      })
+    } else {
+      this.setData({ 
+        selectedType: type,
+        showTypeFilter: false 
+      })
+      this.filterDishes()
+    }
   },
 
   filterDishes() {

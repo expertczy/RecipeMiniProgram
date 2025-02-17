@@ -32,7 +32,6 @@ page {
 .dish-info {
   display: flex;
   align-items: center;
-  margin-bottom: 20rpx;
 }
 
 .dish-name {
