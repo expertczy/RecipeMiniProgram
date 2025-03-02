@@ -108,11 +108,11 @@
             <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
           </view>
           <view 
-            class="type-option {{selectedType === 'soup' ? 'selected' : ''}}"
+            class="type-option {{selectedType === 'drink' ? 'selected' : ''}}"
             bindtap="onTypeSelect"
-            data-type="soup"
+            data-type="drink"
           >
-            <image class="type-icon" src="/images/soup.png" mode="aspectFit"></image>
+            <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
           </view>
           <view 
             class="type-option {{selectedType === 'dessert' ? 'selected' : ''}}"
@@ -162,8 +162,8 @@
           <view class="type-option {{newDishType === 'vegetable' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="vegetable">
             <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
           </view>
-          <view class="type-option {{newDishType === 'soup' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="soup">
-            <image class="type-icon" src="/images/soup.png" mode="aspectFit"></image>
+          <view class="type-option {{newDishType === 'drink' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="drink">
+            <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
           </view>
         </view>
       </view>

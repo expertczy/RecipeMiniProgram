@@ -55,12 +55,12 @@
           <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
         </view>
         <view 
-          class="type-option {{dish.type === 'soup' ? 'selected' : ''}}" 
+          class="type-option {{dish.type === 'drink' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
-          data-type="soup"
+          data-type="drink"
           data-target="dish"
         >
-          <image class="type-icon" src="/images/soup.png" mode="aspectFit"></image>
+          <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
         </view>
         <view 
           class="type-option {{dish.type === 'dessert' ? 'selected' : ''}}" 

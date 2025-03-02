@@ -197,15 +197,15 @@ Page({
     if (dishes.length === 0) return
     
     // Filter dishes by type
-    const meatAndSoupDishes = dishes.filter(dish => 
-      ['beef', 'chicken', 'pork', 'sheep', 'soup'].includes(dish.type)
+    const meatAndDrinkDishes = dishes.filter(dish => 
+      ['beef', 'chicken', 'pork', 'sheep', 'drink'].includes(dish.type)
     )
     const vegDishes = dishes.filter(dish => 
       dish.type === 'vegetable'
     )
 
     // Check if we have enough dishes of each type
-    if (meatAndSoupDishes.length === 0 || vegDishes.length === 0) {
+    if (meatAndDrinkDishes.length === 0 || vegDishes.length === 0) {
       wx.showToast({
         title: '菜品不足',
         icon: 'error'
@@ -214,12 +214,12 @@ Page({
     }
 
     // Select random dishes from each category
-    const randomMeatSoup = meatAndSoupDishes[Math.floor(Math.random() * meatAndSoupDishes.length)]
+    const randomMeatDrink = meatAndDrinkDishes[Math.floor(Math.random() * meatAndDrinkDishes.length)]
     const randomVeg = vegDishes[Math.floor(Math.random() * vegDishes.length)]
 
     // Update the filtered dishes to show only these two selections
     this.setData({
-      filteredDishes: [randomMeatSoup, randomVeg]
+      filteredDishes: [randomMeatDrink, randomVeg]
     })
   },
 
