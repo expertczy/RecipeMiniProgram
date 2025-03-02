@@ -15,6 +15,8 @@ Page({
     filteredDishes: [],  // Initialize empty
     newDishType: '',
     isAddingDish: false,
+    userFilter: 'all', // 'all', 'ricky', or 'expert'
+    allDishes: [], // Store all dishes before filtering
   },
 
   async loadDishes() {
@@ -22,9 +24,10 @@ Page({
     try {
       const dishes = await api.getDishes()
       this.setData({ 
-        dishes,
-        filteredDishes: dishes  // Initialize with all dishes
+        allDishes: dishes,
+        dishes: dishes
       })
+      this.filterDishes()
     } catch (error) {
       console.error('Failed to load dishes:', error)
       wx.showToast({
@@ -175,7 +178,7 @@ Page({
   },
 
   filterDishes() {
-    let filtered = [...this.data.dishes]
+    let filtered = [...this.data.allDishes]
     
     // Filter by search text
     if (this.data.searchText) {
@@ -189,7 +192,17 @@ Page({
       filtered = filtered.filter(dish => dish.type === this.data.selectedType)
     }
 
-    this.setData({ filteredDishes: filtered })
+    // Filter by user filter
+    if (this.data.userFilter === 'expert') {
+      filtered = filtered.filter(dish => dish.image === '/images/EXPERT.jpg')
+    } else if (this.data.userFilter === 'ricky') {
+      filtered = filtered.filter(dish => dish.image === '/images/Ricky.jpg')
+    }
+
+    this.setData({
+      filteredDishes: filtered,
+      dishes: filtered
+    })
   },
 
   async surpriseMe() {
@@ -227,5 +240,31 @@ Page({
     this.setData({
       filteredDishes: this.data.dishes
     })
-  }
+  },
+
+  setUserFilter(e) {
+    const filter = e.currentTarget.dataset.filter;
+    this.setData({ userFilter: filter });
+    this.filterDishes();
+  },
+
+  showUserFilterOptions() {
+    wx.showActionSheet({
+      itemList: ['全部', 'Ricky', '砖家'],
+      success: (res) => {
+        const filters = ['all', 'ricky', 'expert'];
+        this.setData({ userFilter: filters[res.tapIndex] });
+        this.filterDishes();
+      }
+    });
+  },
+
+  resetFilters() {
+    this.setData({
+      searchText: '',
+      selectedType: '',
+      userFilter: 'all'
+    });
+    this.filterDishes();
+  },
 })
