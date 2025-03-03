@@ -10,12 +10,14 @@ Page({
     isLoading: false,
     useExpertImage: false,  // New flag to track which image to use
     searchText: '',
-    showTypeFilter: false,
+    showTypeFilterPopup: false,
     selectedType: '',
+    tempSelectedType: '', // Temporary storage for type selection
+    userFilter: 'all', // 'all', 'ricky', or 'expert'
+    tempUserFilter: 'all', // Temporary storage for user filter selection
     filteredDishes: [],  // Initialize empty
     newDishType: '',
     isAddingDish: false,
-    userFilter: 'all', // 'all', 'ricky', or 'expert'
     allDishes: [], // Store all dishes before filtering
   },
 
@@ -141,11 +143,15 @@ Page({
   },
 
   showTypeFilter() {
-    this.setData({ showTypeFilter: true })
+    this.setData({ 
+      showTypeFilterPopup: true,
+      tempSelectedType: this.data.selectedType,
+      tempUserFilter: this.data.userFilter
+    })
   },
 
   hideTypeFilter() {
-    this.setData({ showTypeFilter: false })
+    this.setData({ showTypeFilterPopup: false })
   },
 
   stopPropagation(e) {
@@ -155,7 +161,7 @@ Page({
 
   showTypeFilterForAdd() {
     this.setData({ 
-      showTypeFilter: true,
+      showTypeFilterPopup: true,
       isAddingDish: true
     })
   },
@@ -165,16 +171,52 @@ Page({
     if (this.data.isAddingDish) {
       this.setData({ 
         newDishType: type,
-        showTypeFilter: false,
+        showTypeFilterPopup: false,
         isAddingDish: false
       })
     } else {
       this.setData({ 
-        selectedType: type,
-        showTypeFilter: false 
+        tempSelectedType: type
       })
-      this.filterDishes()
     }
+  },
+
+  selectUserFilter(e) {
+    const filter = e.currentTarget.dataset.filter;
+    this.setData({ 
+      tempUserFilter: filter
+    });
+  },
+
+  applyFilters() {
+    if (this.data.isAddingDish) {
+      this.setData({
+        newDishType: this.data.tempSelectedType,
+        useExpertImage: this.data.tempUserFilter === 'expert',
+        showTypeFilterPopup: false,
+        isAddingDish: false
+      });
+    } else {
+      this.setData({
+        selectedType: this.data.tempSelectedType,
+        userFilter: this.data.tempUserFilter,
+        showTypeFilterPopup: false
+      });
+      this.filterDishes();
+    }
+  },
+
+  resetFilters() {
+    this.setData({
+      tempSelectedType: '',
+      tempUserFilter: 'all'
+    });
+  },
+
+  cancelFilters() {
+    this.setData({
+      showTypeFilterPopup: false
+    });
   },
 
   filterDishes() {
@@ -242,29 +284,12 @@ Page({
     })
   },
 
-  setUserFilter(e) {
-    const filter = e.currentTarget.dataset.filter;
-    this.setData({ userFilter: filter });
-    this.filterDishes();
-  },
-
-  showUserFilterOptions() {
-    wx.showActionSheet({
-      itemList: ['全部', 'Ricky', '砖家'],
-      success: (res) => {
-        const filters = ['all', 'ricky', 'expert'];
-        this.setData({ userFilter: filters[res.tapIndex] });
-        this.filterDishes();
-      }
-    });
-  },
-
-  resetFilters() {
+  showCombinedFilterForAdd() {
     this.setData({
-      searchText: '',
-      selectedType: '',
-      userFilter: 'all'
+      showTypeFilterPopup: true,
+      isAddingDish: true,
+      tempSelectedType: this.data.newDishType || '',
+      tempUserFilter: this.data.useExpertImage ? 'expert' : 'ricky'
     });
-    this.filterDishes();
   },
 })

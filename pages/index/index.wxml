@@ -5,18 +5,13 @@
     <view class="form">
       <view class="input-row">
         <input class="input" placeholder="输入菜品名称" bindinput="onInputChange" value="{{newDishName}}"/>
-        <button class="image-button" bindtap="showTypeFilterForAdd">
+        <button class="image-button" bindtap="showCombinedFilterForAdd">
           <view class="icon-wrapper">
             <image 
               class="user-icon" 
               src="{{newDishType ? '/images/' + newDishType + '.png' : '/images/filter.png'}}" 
-              mode="{{newDishType ? 'aspectFit' : 'aspectFill'}}"
+              mode="aspectFit"
             ></image>
-          </view>
-        </button>
-        <button class="image-button" bindtap="toggleImage">
-          <view class="icon-wrapper">
-            <image class="user-icon" src="{{useExpertImage ? '/images/EXPERT.jpg' : '/images/Ricky.jpg'}}"></image>
           </view>
         </button>
         <button class="add-button {{isLoading ? 'loading' : ''}}" bindtap="addDishWithApi" disabled="{{isLoading}}">
@@ -43,17 +38,6 @@
             🎲
           </view>
         </button>
-        <!-- User filter button -->
-        <button class="image-button {{userFilter !== 'all' ? 'active' : ''}}" bindtap="showUserFilterOptions">
-          <view class="icon-wrapper">
-            <image 
-              class="user-icon" 
-              src="{{userFilter === 'expert' ? '/images/EXPERT.jpg' : userFilter === 'ricky' ? '/images/Ricky.jpg' : '/images/user.png'}}" 
-              mode="aspectFill"
-            ></image>
-            <view wx:if="{{userFilter !== 'all'}}" class="user-filter-indicator"></view>
-          </view>
-        </button>
       </view>
     </view>
     
@@ -73,51 +57,54 @@
     </view>
 
     <!-- Type Filter Popup -->
-    <view class="type-filter-popup" wx:if="{{showTypeFilterPopup}}">
-      <view class="type-filter-content">
+    <view class="type-filter-popup" wx:if="{{showTypeFilterPopup}}" bindtap="hideTypeFilter">
+      <view class="type-filter-content" catchtap="stopPropagation">
         <view class="filter-section">
           <view class="filter-title">菜品类型</view>
           <view class="type-grid">
-            <view class="type-option {{selectedType === 'beef' ? 'selected' : ''}}" bindtap="selectType" data-type="beef">
+            <view class="type-option {{tempSelectedType === 'beef' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="beef">
               <image class="type-icon" src="/images/beef.png" mode="aspectFit"></image>
-              <text>牛肉</text>
             </view>
-            <view class="type-option {{selectedType === 'chicken' ? 'selected' : ''}}" bindtap="selectType" data-type="chicken">
+            <view class="type-option {{tempSelectedType === 'chicken' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="chicken">
               <image class="type-icon" src="/images/chicken.png" mode="aspectFit"></image>
-              <text>鸡肉</text>
             </view>
-            <view class="type-option {{selectedType === 'pork' ? 'selected' : ''}}" bindtap="selectType" data-type="pork">
+            <view class="type-option {{tempSelectedType === 'pork' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="pork">
               <image class="type-icon" src="/images/pork.png" mode="aspectFit"></image>
-              <text>猪肉</text>
             </view>
-            <view class="type-option {{selectedType === 'sheep' ? 'selected' : ''}}" bindtap="selectType" data-type="sheep">
+            <view class="type-option {{tempSelectedType === 'sheep' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="sheep">
               <image class="type-icon" src="/images/sheep.png" mode="aspectFit"></image>
-              <text>羊肉</text>
             </view>
-            <!-- Add more type options as needed -->
+            <view class="type-option {{tempSelectedType === 'seafood' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="seafood">
+              <image class="type-icon" src="/images/seafood.png" mode="aspectFit"></image>
+            </view>
+            <view class="type-option {{tempSelectedType === 'vegetable' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="vegetable">
+              <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
+            </view>
+            <view class="type-option {{tempSelectedType === 'dessert' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="dessert">
+              <image class="type-icon" src="/images/dessert.png" mode="aspectFit"></image>
+            </view>
+            <view class="type-option {{tempSelectedType === 'drink' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="drink">
+              <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
+            </view>
           </view>
         </view>
         
         <view class="filter-section">
           <view class="filter-title">来源</view>
           <view class="user-filter-grid">
-            <view class="user-option {{userFilter === 'all' ? 'selected' : ''}}" bindtap="selectUserFilter" data-filter="all">
-              <text>全部</text>
-            </view>
-            <view class="user-option {{userFilter === 'ricky' ? 'selected' : ''}}" bindtap="selectUserFilter" data-filter="ricky">
+            <view class="user-option {{tempUserFilter === 'ricky' ? 'selected' : ''}}" bindtap="selectUserFilter" data-filter="ricky">
               <image class="user-filter-icon" src="/images/Ricky.jpg" mode="aspectFill"></image>
-              <text>Ricky</text>
             </view>
-            <view class="user-option {{userFilter === 'expert' ? 'selected' : ''}}" bindtap="selectUserFilter" data-filter="expert">
+            <view class="user-option {{tempUserFilter === 'expert' ? 'selected' : ''}}" bindtap="selectUserFilter" data-filter="expert">
               <image class="user-filter-icon" src="/images/EXPERT.jpg" mode="aspectFill"></image>
-              <text>砖家</text>
             </view>
           </view>
         </view>
         
         <view class="filter-actions">
-          <button class="clear-button" bindtap="resetFilters">重置所有筛选</button>
-          <button class="apply-button" bindtap="closeTypeFilter">确定</button>
+          <button class="clear-button" bindtap="resetFilters">重置</button>
+         
+          <button class="apply-button" bindtap="applyFilters">确定</button>
         </view>
       </view>
     </view>

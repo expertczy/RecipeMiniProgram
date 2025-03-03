@@ -365,15 +365,14 @@ page {
 }
 
 .filter-title {
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-weight: 500;
   margin-bottom: 20rpx;
   color: #333;
 }
 
 .user-filter-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 20rpx;
   margin-bottom: 20rpx;
 }
@@ -382,8 +381,10 @@ page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10rpx;
   padding: 15rpx;
   border-radius: 8rpx;
+  min-width: 100rpx;
 }
 
 .user-option.selected {
@@ -391,31 +392,41 @@ page {
 }
 
 .user-filter-icon {
-  width: 60rpx;
-  height: 60rpx;
+  width: 80rpx;
+  height: 80rpx;
   border-radius: 50%;
-  margin-bottom: 10rpx;
+  object-fit: cover;
 }
 
 .filter-actions {
   display: flex;
   gap: 20rpx;
+  justify-content: space-between;
+  margin-top: 30rpx;
 }
 
-.apply-button {
+.clear-button, .apply-button {
   flex: 1;
   height: 80rpx;
-  background: #07c160 !important;
-  color: white;
   border-radius: 8rpx;
   font-size: 28rpx;
   display: flex !important;
   align-items: center;
   justify-content: center;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
-.apply-button::after {
+.clear-button {
+  background: #f5f5f5 !important;
+  color: #333;
+}
+
+.apply-button {
+  background: #07c160 !important;
+  color: white;
+}
+
+.clear-button::after, .apply-button::after {
   border: none;
 }
