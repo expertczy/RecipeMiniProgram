@@ -130,8 +130,8 @@
     </view>
   </view>
 
-  <!-- Rest of the cards -->
-  <view class="dish-card">
+  <!-- Ingredients Card - Now with flex-grow to fill available space -->
+  <view class="dish-card ingredients-card">
     <view class="card-title">食材</view>
     <view class="card-content">
       <textarea 
@@ -144,7 +144,8 @@
     </view>
   </view>
 
-  <view class="dish-card">
+  <!-- Buttons Card -->
+  <view class="dish-card buttons-card">
     <view class="button-row">
       <button class="save-button" bindtap="saveDish" disabled="{{isLoading}}">
         {{isLoading ? '保存中...' : '保存'}}

@@ -2,12 +2,15 @@
 
 page {
   background-color: #f5f5f5;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
   padding: 20rpx;
   width: 100%;
-  height: auto;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,6 +30,14 @@ page {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 20rpx;
+}
+
+/* Make the ingredients card expand to fill available space */
+.ingredients-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 400rpx;
 }
 
 .dish-info {
@@ -49,11 +60,15 @@ page {
   font-size: 28rpx;
   color: #666;
   line-height: 1.5;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .edit-area {
   width: 100%;
-  min-height: 120rpx;
+  flex: 1;
+  min-height: 300rpx;
   border: 1px solid #ddd;
   border-radius: 8rpx;
   padding: 20rpx;
@@ -196,4 +211,8 @@ page {
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.buttons-card {
+  margin-bottom: 0;
 }
