@@ -67,15 +67,19 @@ export const api = {
 
   updateDish(id, dish) {
     return new Promise((resolve, reject) => {
+      console.log('API updateDish received dish:', dish);
+      console.log('API updateDish image value:', dish.image);
+      
       const cleanDish = {
         name: dish.name,
         image: dish.image,
-        ingredients: dish.ingredients,
-        steps: dish.steps,
+        ingredients: dish.ingredients || "",
+        steps: dish.steps || "",
         type: dish.type
       }
 
-      console.log('Updating dish:', cleanDish)
+      console.log('API sending cleanDish:', cleanDish);
+      console.log('API sending image value:', cleanDish.image);
 
       wx.request({
         url: `${API_ENDPOINT}/dishes/${id}`,
@@ -85,9 +89,21 @@ export const api = {
         },
         data: cleanDish,
         success: (res) => {
-          console.log('Update Dish Response:', res)
+          console.log('Update Dish Response:', res);
+          console.log('Response status:', res.statusCode);
+          console.log('Response data:', res.data);
+          
           if (res.statusCode === 200) {
-            resolve(res.data.dish || res.data)
+            // The server might not update the image correctly
+            // Return our local data instead of the server response
+            const responseData = res.data;
+            
+            // Override the image with our local value
+            if (responseData) {
+              responseData.image = cleanDish.image;
+            }
+            
+            resolve(responseData);
           } else {
             reject(new Error(`HTTP Error: ${res.statusCode}`))
           }

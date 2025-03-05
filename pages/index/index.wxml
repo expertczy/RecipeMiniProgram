@@ -1,25 +1,6 @@
 <navigation-bar title="" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 <scroll-view class="scrollarea" scroll-y type="list">
   <view class="container">
-    <!-- Add dish form -->
-    <view class="form">
-      <view class="input-row">
-        <input class="input" placeholder="输入菜品名称" bindinput="onInputChange" value="{{newDishName}}"/>
-        <button class="image-button" bindtap="showCombinedFilterForAdd">
-          <view class="icon-wrapper">
-            <image 
-              class="user-icon" 
-              src="{{newDishType ? '/images/' + newDishType + '.png' : '/images/filter.png'}}" 
-              mode="aspectFit"
-            ></image>
-          </view>
-        </button>
-        <button class="add-button {{isLoading ? 'loading' : ''}}" bindtap="addDishWithApi" disabled="{{isLoading}}">
-          {{isLoading ? '...' : '+'}}
-        </button>
-      </view>
-    </view>
-
     <!-- Search and Filter Card -->
     <view class="form">
       <view class="input-row">
@@ -38,22 +19,57 @@
             🎲
           </view>
         </button>
+        <button class="add-dish-button-inline" bindtap="showAddDishPopup">+</button>
       </view>
     </view>
     
-    <!-- Dishes list -->
-    <view class="dishes-list">
-      <view wx:for="{{filteredDishes}}" wx:key="id" class="dish-item {{item.image === '/images/EXPERT.jpg' ? 'expert-dish' : 'ricky-dish'}}" bindtap="navigateToDetail" data-id="{{item.id}}">
-        <view class="dish-content">
-          <image 
-            wx:if="{{item.type}}"
-            class="type-icon" 
-            src="/images/{{item.type}}.png" 
-            mode="aspectFit"
-          ></image>
-          <text class="dish-name">{{item.name}}</text>
+    <!-- Pending Dishes Card (待做) -->
+    <view class="pending-dishes-card" wx:if="{{pendingDishes.length > 0}}">
+      <view class="pending-header">
+        <image class="pending-icon" src="/images/etc.png" mode="aspectFit"></image>
+        <text class="pending-title">待做菜品</text>
+      </view>
+      <view class="pending-dishes-list">
+        <view wx:for="{{pendingDishes}}" wx:key="id" wx:for-item="dish"
+              class="pending-dish-item" 
+              bindtap="navigateToDetail" data-id="{{dish.id}}">
+          <view class="dish-content">
+            <text class="dish-name">{{dish.name}}</text>
+          </view>
         </view>
       </view>
+    </view>
+    
+    <!-- Dishes list grouped by type -->
+    <view class="dishes-list">
+      <block wx:for="{{dishTypes}}" wx:key="*this" wx:for-item="type">
+        <view class="type-section">
+          <view class="type-header">
+            <image class="type-header-icon" src="/images/{{type === 'other' ? 'filter' : type}}.png" mode="aspectFit"></image>
+            <text class="type-header-text">{{type === 'beef' ? '牛肉' : 
+                                           type === 'chicken' ? '鸡/鸭肉' : 
+                                           type === 'pork' ? '猪肉' : 
+                                           type === 'sheep' ? '羊肉' : 
+                                           type === 'seafood' ? '海鲜' : 
+                                           type === 'vegetable' ? '蔬菜' : 
+                                           type === 'main' ? '主食' : 
+                                           type === 'drink' ? '饮品' : 
+                                           '其他'}}</text>
+            <view wx:if="{{groupedDishes[type].length > 4}}" class="expand-button" bindtap="toggleTypeExpansion" data-type="{{type}}">
+              <text class="expand-text">{{expandedTypes[type] ? '收起' : '展开'}}</text>
+            </view>
+          </view>
+          <view class="type-dishes">
+            <view wx:for="{{groupedDishes[type]}}" wx:key="id" wx:for-item="dish" wx:if="{{expandedTypes[type] || index < 4}}"
+                  class="dish-item {{dish.image === '/images/EXPERT.jpg' ? 'expert-dish' : (dish.image === '/images/Ricky.jpg' ? 'ricky-dish' : '')}}" 
+                  bindtap="navigateToDetail" data-id="{{dish.id}}">
+              <view class="dish-content">
+                <text class="dish-name">{{dish.name}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
     </view>
 
     <!-- Type Filter Popup -->
@@ -80,8 +96,8 @@
             <view class="type-option {{tempSelectedType === 'vegetable' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="vegetable">
               <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
             </view>
-            <view class="type-option {{tempSelectedType === 'dessert' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="dessert">
-              <image class="type-icon" src="/images/dessert.png" mode="aspectFit"></image>
+            <view class="type-option {{tempSelectedType === 'main' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="main">
+              <image class="type-icon" src="/images/main.png" mode="aspectFit"></image>
             </view>
             <view class="type-option {{tempSelectedType === 'drink' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="drink">
               <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
@@ -98,13 +114,25 @@
             <view class="user-option {{tempUserFilter === 'expert' ? 'selected' : ''}}" bindtap="selectUserFilter" data-filter="expert">
               <image class="user-filter-icon" src="/images/EXPERT.jpg" mode="aspectFill"></image>
             </view>
+            <view class="user-option {{tempUserFilter === 'pending' ? 'selected' : ''}}" bindtap="selectUserFilter" data-filter="pending">
+              <image class="user-filter-icon" src="/images/etc.png" mode="aspectFill"></image>
+            </view>
           </view>
         </view>
         
-        <view class="filter-actions">
+        <!-- Add Dish Input (only shown when adding a dish) -->
+        <view class="filter-section" wx:if="{{isAddingDish}}">
+          <view class="filter-title">输入菜品名称</view>
+          <input class="dish-input" placeholder="输入菜品名称" value="{{tempDishName}}" bindinput="onTempDishNameInput" />
+        </view>
+        
+        <view class="filter-actions" wx:if="{{!isAddingDish}}">
           <button class="clear-button" bindtap="resetFilters">重置</button>
-         
           <button class="apply-button" bindtap="applyFilters">确定</button>
+        </view>
+        
+        <view class="filter-actions" wx:if="{{isAddingDish}}">
+          <button class="add-button-popup" bindtap="addDishFromPopup">添加</button>
         </view>
       </view>
     </view>
@@ -137,8 +165,8 @@
           <view class="type-option {{newDishType === 'vegetable' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="vegetable">
             <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
           </view>
-          <view class="type-option {{newDishType === 'drink' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="drink">
-            <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
+          <view class="type-option {{newDishType === 'main' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="main">
+            <image class="type-icon" src="/images/main.png" mode="aspectFit"></image>
           </view>
         </view>
       </view>

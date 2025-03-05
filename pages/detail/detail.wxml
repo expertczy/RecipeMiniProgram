@@ -7,6 +7,34 @@
     </view>
   </view>
 
+  <!-- Source Selection Card -->
+  <view class="dish-card">
+    <view class="card-title">来源</view>
+    <view class="source-selector">
+      <view 
+        class="source-option {{dish.image === '/images/Ricky.jpg' ? 'selected' : ''}}" 
+        bindtap="onSourceSelect" 
+        data-source="ricky"
+      >
+        <image class="source-icon" src="/images/Ricky.jpg" mode="aspectFill"></image>
+      </view>
+      <view 
+        class="source-option {{dish.image === '/images/EXPERT.jpg' ? 'selected' : ''}}" 
+        bindtap="onSourceSelect" 
+        data-source="expert"
+      >
+        <image class="source-icon" src="/images/EXPERT.jpg" mode="aspectFill"></image>
+      </view>
+      <view 
+        class="source-option {{dish.image === '/images/etc.png' ? 'selected' : ''}}" 
+        bindtap="onSourceSelect" 
+        data-source="pending"
+      >
+        <image class="source-icon" src="/images/etc.png" mode="aspectFill"></image>
+      </view>
+    </view>
+  </view>
+
   <!-- Type Card -->
   <view class="dish-card">
     <view class="type-selector">
@@ -63,12 +91,12 @@
           <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
         </view>
         <view 
-          class="type-option {{dish.type === 'dessert' ? 'selected' : ''}}" 
+          class="type-option {{dish.type === 'main' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
-          data-type="dessert"
+          data-type="main"
           data-target="dish"
         >
-          <image class="type-icon" src="/images/dessert.png" mode="aspectFit"></image>
+          <image class="type-icon" src="/images/main.png" mode="aspectFit"></image>
         </view>
         <view 
           class="type-option {{dish.type === 'seafood' ? 'selected' : ''}}" 
@@ -111,19 +139,6 @@
         value="{{dish.ingredients}}" 
         placeholder="请输入食材清单" 
         bindinput="onIngredientsChange"
-        disabled="{{isLoading}}"
-      ></textarea>
-    </view>
-  </view>
-
-  <view class="dish-card">
-    <view class="card-title">步骤</view>
-    <view class="card-content">
-      <textarea 
-        class="edit-area" 
-        value="{{dish.steps}}" 
-        placeholder="请输入烹饪步骤" 
-        bindinput="onStepsChange"
         disabled="{{isLoading}}"
       ></textarea>
     </view>
