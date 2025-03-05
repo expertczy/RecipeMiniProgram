@@ -43,6 +43,7 @@ page {
 .dish-info {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .dish-name {
@@ -73,7 +74,7 @@ page {
   border-radius: 8rpx;
   padding: 20rpx;
   box-sizing: border-box;
-  font-size: 28rpx;
+  font-size: 32rpx;
   line-height: 1.5;
 }
 
@@ -215,4 +216,22 @@ page {
 
 .buttons-card {
   margin-bottom: 0;
+}
+
+/* 菜名编辑框样式 */
+.name-edit-container {
+  width: 100%;
+}
+
+.name-edit-area {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  font-size: 36rpx;
+  font-weight: 500;
+  min-height: 80rpx;
+  line-height: 1.5;
+  background-color: #fff;
 }

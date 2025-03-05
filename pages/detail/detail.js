@@ -3,27 +3,82 @@ import { api } from '../../utils/api.js'
 Page({
   data: {
     dish: null,
-    secondDish: null,
-    isLoading: false
+    isLoading: false,
+    isEditingName: false,
+    hasUnsavedChanges: false
   },
 
-  async onLoad(options) {
-    if (!options.id) {
-      wx.showToast({
-        title: '菜品ID无效',
-        icon: 'error'
-      })
-      return
+  onLoad(options) {
+    console.log('Detail page loaded with options:', options);
+    
+    if (options.id) {
+      this.setData({
+        dishId: options.id
+      });
+      this.loadDish(options.id);
+    } else {
+      // 新建菜品
+      this.setData({
+        dish: {
+          name: '',
+          type: 'meat',
+          ingredients: '',
+          image: '/images/Ricky.jpg'
+        },
+        isNewDish: true
+      });
     }
-
-    // Load both dishes if secondId is provided
-    await Promise.all([
-      this.loadDish(options.id, 'dish'),
-      options.secondId ? this.loadDish(options.secondId, 'secondDish') : Promise.resolve()
-    ])
+    
+    // 设置页面返回拦截
+    const pages = getCurrentPages();
+    const currentPage = pages[pages.length - 1];
+    
+    // 保存原始的onUnload方法
+    this.originalOnUnload = currentPage.onUnload;
   },
 
-  async loadDish(id, targetField = 'dish') {
+  // 页面卸载前触发
+  onUnload() {
+    // 如果有未保存的修改，记录日志
+    if (this.data.hasUnsavedChanges) {
+      console.log('页面卸载时有未保存的修改');
+    }
+    
+    // 调用原始的onUnload方法（如果存在）
+    if (this.originalOnUnload) {
+      this.originalOnUnload();
+    }
+  },
+
+  // 设置未保存修改状态
+  setUnsavedChanges(hasChanges) {
+    this.setData({ hasUnsavedChanges: hasChanges });
+    
+    if (hasChanges) {
+      // 启用返回拦截
+      wx.enableAlertBeforeUnload({
+        message: '您有未保存的修改，确定要离开吗？',
+        success: (res) => {
+          console.log('启用返回拦截成功', res);
+        },
+        fail: (err) => {
+          console.error('启用返回拦截失败', err);
+        }
+      });
+    } else {
+      // 关闭返回拦截
+      wx.disableAlertBeforeUnload({
+        success: (res) => {
+          console.log('关闭返回拦截成功', res);
+        },
+        fail: (err) => {
+          console.error('关闭返回拦截失败', err);
+        }
+      });
+    }
+  },
+
+  async loadDish(id) {
     this.setData({ isLoading: true })
     try {
       const dishes = await api.getDishes()
@@ -59,9 +114,8 @@ Page({
       
       console.log('Processed dish with image:', dish.image);
 
-      // Use dynamic field name to update either dish or secondDish
       this.setData({ 
-        [targetField]: dish,
+        dish,
         isLoading: false
       })
     } catch (error) {
@@ -77,19 +131,30 @@ Page({
   onIngredientsChange(e) {
     const dish = { ...this.data.dish }
     dish.ingredients = e.detail.value
-    this.setData({ dish })
+    this.setData({ dish });
+    this.setUnsavedChanges(true);
+  },
+
+  toggleNameEdit() {
+    this.setData({
+      isEditingName: !this.data.isEditingName
+    })
+  },
+
+  onNameChange(e) {
+    const dish = { ...this.data.dish }
+    dish.name = e.detail.value
+    this.setData({ dish });
+    this.setUnsavedChanges(true);
   },
 
   onTypeSelect(e) {
     const type = e.currentTarget.dataset.type;
-    const target = e.currentTarget.dataset.target || 'dish';
-    
-    const updatedData = { ...this.data[target] };
+    const updatedData = { ...this.data.dish };
     updatedData.type = type;
     
-    this.setData({ 
-      [target]: updatedData 
-    });
+    this.setData({ dish: updatedData });
+    this.setUnsavedChanges(true);
   },
 
   onSourceSelect(e) {
@@ -110,6 +175,7 @@ Page({
     
     console.log('New dish image:', dish.image);
     this.setData({ dish });
+    this.setUnsavedChanges(true);
   },
 
   async saveDish() {
@@ -142,9 +208,12 @@ Page({
         icon: 'success'
       })
 
-      // Don't reload the dish as the server doesn't properly update the image
-      // Keep the local changes instead
-      this.setData({ isLoading: false })
+      // 退出菜名编辑状态并重置未保存标志
+      this.setData({ 
+        isLoading: false,
+        isEditingName: false
+      })
+      this.setUnsavedChanges(false);
     } catch (error) {
       console.error('Error saving dish:', error)
       wx.showToast({
@@ -169,10 +238,16 @@ Page({
       content: '确定要删除这道菜吗？',
       success: async (res) => {
         if (res.confirm) {
-          this.setData({ isLoading: true })
+          this.setData({ 
+            isLoading: true,
+            isEditingName: false // 退出编辑状态
+          })
           try {
             console.log('Deleting dish with ID:', this.data.dish.id)
             await api.deleteDish(this.data.dish.id)
+
+            // 删除成功后重置未保存标志
+            this.setUnsavedChanges(false);
 
             wx.showToast({
               title: '已删除',
@@ -195,5 +270,22 @@ Page({
         }
       }
     })
-  }
+  },
+
+  // 添加返回按钮拦截
+  onBackPress(e) {
+    // 系统已经通过enableAlertBeforeUnload处理了确认对话框
+    // 这里只需要决定是否阻止默认的返回行为
+    return this.data.hasUnsavedChanges; // 如果有未保存的修改，阻止默认的返回行为
+  },
+
+  // 自定义导航栏返回按钮事件
+  onBeforeBack() {
+    // 如果没有未保存的修改，直接返回
+    if (!this.data.hasUnsavedChanges) {
+      wx.navigateBack();
+    }
+    // 如果有未保存的修改，系统会通过enableAlertBeforeUnload显示确认对话框
+    // 用户确认后会自动返回，不需要在这里处理
+  },
 }) 

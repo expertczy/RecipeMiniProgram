@@ -27,7 +27,7 @@
     <view class="pending-dishes-card" wx:if="{{pendingDishes.length > 0}}">
       <view class="pending-header">
         <image class="pending-icon" src="/images/etc.png" mode="aspectFit"></image>
-        <text class="pending-title">待做菜品</text>
+        <text class="pending-title">待做</text>
       </view>
       <view class="pending-dishes-list">
         <view wx:for="{{pendingDishes}}" wx:key="id" wx:for-item="dish"
