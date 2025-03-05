@@ -9,7 +9,6 @@
 
   <!-- Source Selection Card -->
   <view class="dish-card">
-    <view class="card-title">来源</view>
     <view class="source-selector">
       <view 
         class="source-option {{dish.image === '/images/Ricky.jpg' ? 'selected' : ''}}" 
