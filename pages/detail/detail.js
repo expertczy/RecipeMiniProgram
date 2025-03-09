@@ -28,13 +28,6 @@ Page({
         isNewDish: true
       });
     }
-    
-    // 设置页面返回拦截
-    const pages = getCurrentPages();
-    const currentPage = pages[pages.length - 1];
-    
-    // 保存原始的onUnload方法
-    this.originalOnUnload = currentPage.onUnload;
   },
 
   // 页面卸载前触发
@@ -42,11 +35,6 @@ Page({
     // 如果有未保存的修改，记录日志
     if (this.data.hasUnsavedChanges) {
       console.log('页面卸载时有未保存的修改');
-    }
-    
-    // 调用原始的onUnload方法（如果存在）
-    if (this.originalOnUnload) {
-      this.originalOnUnload();
     }
   },
 

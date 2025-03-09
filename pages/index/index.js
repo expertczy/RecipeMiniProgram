@@ -80,7 +80,7 @@ Page({
     // Custom order with specific requirements:
     // 1. drink first (after pending)
     // 2. beef and other meat types
-    // 3. seafood before vegetable
+    // 3. seafood
     // 4. vegetable near the end (before main)
     // 5. main at the very end
     const customOrder = [];
@@ -103,19 +103,19 @@ Page({
       }
     });
     
-    // Add seafood before vegetable if it exists
+    // Add seafood if it exists
     if (types.includes('seafood')) {
       customOrder.push('seafood');
-    }
-    
-    // Add vegetable before main if it exists
-    if (types.includes('vegetable')) {
-      customOrder.push('vegetable');
     }
     
     // Add main if it exists
     if (types.includes('main')) {
       customOrder.push('main');
+    }
+    
+    // Add vegetable near the end if it exists
+    if (types.includes('vegetable')) {
+      customOrder.push('vegetable');
     }
     
     // Add other at the very end if it exists
@@ -307,15 +307,15 @@ Page({
     const nonPendingDishes = dishes.filter(dish => dish.image !== '/images/etc.png')
     
     // Filter dishes by type
-    const meatAndMainDishes = nonPendingDishes.filter(dish => 
-      ['beef', 'chicken', 'pork', 'sheep', 'main'].includes(dish.type)
+    const mainDishes = nonPendingDishes.filter(dish => 
+      dish.type !== 'drink' && dish.type !== 'vegetable'
     )
     const vegDishes = nonPendingDishes.filter(dish => 
       dish.type === 'vegetable'
     )
 
     // Check if we have enough dishes of each type
-    if (meatAndMainDishes.length === 0 || vegDishes.length === 0) {
+    if (mainDishes.length === 0 || vegDishes.length === 0) {
       wx.showToast({
         title: '菜品不足',
         icon: 'error'
@@ -324,12 +324,12 @@ Page({
     }
 
     // Select random dishes from each category
-    const randomMeatMain = meatAndMainDishes[Math.floor(Math.random() * meatAndMainDishes.length)]
+    const randomMain = mainDishes[Math.floor(Math.random() * mainDishes.length)]
     const randomVeg = vegDishes[Math.floor(Math.random() * vegDishes.length)]
 
-    // Update the filtered dishes to show only these two selections
+    // Update the filtered dishes to show only these two selections, with vegetable at the end
     this.setData({
-      filteredDishes: [randomMeatMain, randomVeg],
+      filteredDishes: [randomMain, randomVeg],
       pendingDishes: [] // Clear pending dishes when in surprise mode
     })
     
@@ -339,7 +339,8 @@ Page({
 
   resetDishes() {
     this.setData({
-      filteredDishes: this.data.dishes
+      filteredDishes: this.data.dishes,
+      pendingDishes: this.data.dishes.filter(dish => dish.image === '/images/etc.png') // Restore pending dishes
     })
     
     // After resetting, regroup the dishes by type

@@ -84,20 +84,20 @@
 
       <view class="type-row">
         <view 
+          class="type-option {{dish.type === 'seafood' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="seafood"
+          data-target="dish"
+        >
+          <image class="type-icon" src="/images/seafood.png" mode="aspectFit"></image>
+        </view>
+        <view 
           class="type-option {{dish.type === 'vegetable' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
           data-type="vegetable"
           data-target="dish"
         >
           <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
-        </view>
-        <view 
-          class="type-option {{dish.type === 'drink' ? 'selected' : ''}}" 
-          bindtap="onTypeSelect" 
-          data-type="drink"
-          data-target="dish"
-        >
-          <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
         </view>
         <view 
           class="type-option {{dish.type === 'main' ? 'selected' : ''}}" 
@@ -108,12 +108,12 @@
           <image class="type-icon" src="/images/main.png" mode="aspectFit"></image>
         </view>
         <view 
-          class="type-option {{dish.type === 'seafood' ? 'selected' : ''}}" 
+          class="type-option {{dish.type === 'drink' ? 'selected' : ''}}" 
           bindtap="onTypeSelect" 
-          data-type="seafood"
+          data-type="drink"
           data-target="dish"
         >
-          <image class="type-icon" src="/images/seafood.png" mode="aspectFit"></image>
+          <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
         </view>
       </view>
     </view>
