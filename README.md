@@ -12,7 +12,7 @@
 
 ### 📱 Project Overview
 
-**Recipe Mini Program** is a WeChat Mini Program that provides users with a comprehensive recipe management system. Users can browse, search, and manage recipes with an intuitive interface designed for Chinese cuisine enthusiasts.
+**Recipe Mini Program** is a WeChat Mini Program that provides users with a comprehensive recipe management system. Users can browse, search, and manage recipes with an intuitive interface.
 
 ### ✨ Features
 
@@ -129,7 +129,7 @@ The application integrates with AWS backend services:
 
 ### 📱 项目概述
 
-**菜谱小程序** 是一个微信小程序，为用户提供全面的菜谱管理系统。用户可以浏览、搜索和管理菜谱，界面专为中国美食爱好者设计，操作直观简单。
+**菜谱小程序** 是一个微信小程序，为用户提供全面的菜谱管理系统。用户可以浏览、搜索和管理菜谱，界面操作直观简单。
 
 ### ✨ 功能特性
 
