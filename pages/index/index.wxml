@@ -1,0 +1,180 @@
+<navigation-bar title="" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <!-- Search and Filter Card -->
+    <view class="form">
+      <view class="input-row">
+        <input class="input" placeholder="搜索菜品" value="{{searchText}}" bindinput="onSearchInput" />
+        <button class="image-button" bindtap="showTypeFilter">
+          <view class="icon-wrapper">
+            <image 
+              class="user-icon" 
+              src="{{selectedType ? '/images/' + selectedType + '.png' : '/images/filter.png'}}" 
+              mode="{{selectedType ? 'aspectFit' : 'aspectFill'}}"
+            ></image>
+          </view>
+        </button>
+        <button class="image-button" bindtap="surpriseMe">
+          <view class="icon-wrapper">
+            🎲
+          </view>
+        </button>
+        <button class="add-dish-button-inline" bindtap="showAddDishPopup">+</button>
+      </view>
+    </view>
+    
+    <!-- Pending Dishes Card (待做) -->
+    <view class="pending-dishes-card" wx:if="{{pendingDishes.length > 0}}">
+      <view class="pending-header">
+        <image class="pending-icon" src="/images/etc.png" mode="aspectFit"></image>
+        <text class="pending-title">待做</text>
+      </view>
+      <view class="pending-dishes-list">
+        <view wx:for="{{pendingDishes}}" wx:key="id" wx:for-item="dish"
+              class="pending-dish-item" 
+              bindtap="navigateToDetail" data-id="{{dish.id}}">
+          <view class="dish-content">
+            <text class="dish-name">{{dish.name}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- Dishes list grouped by type -->
+    <view class="dishes-list">
+      <block wx:for="{{dishTypes}}" wx:key="*this" wx:for-item="type">
+        <view class="type-section">
+          <view class="type-header">
+            <image class="type-header-icon" src="/images/{{type === 'other' ? 'filter' : type}}.png" mode="aspectFit"></image>
+            <text class="type-header-text">{{type === 'beef' ? '牛肉' : 
+                                           type === 'chicken' ? '鸡/鸭肉' : 
+                                           type === 'pork' ? '猪肉' : 
+                                           type === 'sheep' ? '羊肉' : 
+                                           type === 'seafood' ? '海鲜' : 
+                                           type === 'vegetable' ? '蔬菜' : 
+                                           type === 'main' ? '主食' : 
+                                           type === 'drink' ? '饮品' : 
+                                           '其他'}}</text>
+            <view wx:if="{{groupedDishes[type].length > 4}}" class="expand-button" bindtap="toggleTypeExpansion" data-type="{{type}}">
+              <text class="expand-text">{{expandedTypes[type] ? '收起' : '展开'}}</text>
+            </view>
+          </view>
+          <view class="type-dishes">
+            <view wx:for="{{groupedDishes[type]}}" wx:key="id" wx:for-item="dish" wx:if="{{expandedTypes[type] || index < 4}}"
+                  class="dish-item {{dish.image === '/images/EXPERT.jpg' ? 'expert-dish' : (dish.image === '/images/Ricky.jpg' ? 'ricky-dish' : '')}}" 
+                  bindtap="navigateToDetail" data-id="{{dish.id}}">
+              <view class="dish-content">
+                <text class="dish-name">{{dish.name}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- Type Filter Popup -->
+    <view class="type-filter-popup" wx:if="{{showTypeFilterPopup}}" bindtap="hideTypeFilter">
+      <view class="type-filter-content" catchtap="stopPropagation">
+        <view class="filter-section">
+          <view class="filter-title">菜品类型</view>
+          <view class="type-grid">
+            <view class="type-option {{tempSelectedType === 'beef' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="beef">
+              <image class="type-icon" src="/images/beef.png" mode="aspectFit"></image>
+            </view>
+            <view class="type-option {{tempSelectedType === 'chicken' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="chicken">
+              <image class="type-icon" src="/images/chicken.png" mode="aspectFit"></image>
+            </view>
+            <view class="type-option {{tempSelectedType === 'pork' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="pork">
+              <image class="type-icon" src="/images/pork.png" mode="aspectFit"></image>
+            </view>
+            <view class="type-option {{tempSelectedType === 'sheep' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="sheep">
+              <image class="type-icon" src="/images/sheep.png" mode="aspectFit"></image>
+            </view>
+            <view class="type-option {{tempSelectedType === 'seafood' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="seafood">
+              <image class="type-icon" src="/images/seafood.png" mode="aspectFit"></image>
+            </view>
+            <view class="type-option {{tempSelectedType === 'vegetable' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="vegetable">
+              <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
+            </view>
+            <view class="type-option {{tempSelectedType === 'main' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="main">
+              <image class="type-icon" src="/images/main.png" mode="aspectFit"></image>
+            </view>
+            <view class="type-option {{tempSelectedType === 'drink' ? 'selected' : ''}}" bindtap="onTypeSelect" data-type="drink">
+              <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
+            </view>
+          </view>
+        </view>
+        
+        <view class="filter-section">
+          <view class="filter-title">来源</view>
+          <view class="user-filter-grid">
+            <view class="user-option {{tempUserFilter === 'ricky' ? 'selected' : ''}}" bindtap="selectUserFilter" data-filter="ricky">
+              <image class="user-filter-icon" src="/images/Ricky.jpg" mode="aspectFill"></image>
+            </view>
+            <view class="user-option {{tempUserFilter === 'expert' ? 'selected' : ''}}" bindtap="selectUserFilter" data-filter="expert">
+              <image class="user-filter-icon" src="/images/EXPERT.jpg" mode="aspectFill"></image>
+            </view>
+            <view class="user-option {{tempUserFilter === 'pending' ? 'selected' : ''}}" bindtap="selectUserFilter" data-filter="pending">
+              <image class="user-filter-icon" src="/images/etc.png" mode="aspectFill"></image>
+            </view>
+          </view>
+        </view>
+        
+        <!-- Add Dish Input (only shown when adding a dish) -->
+        <view class="filter-section" wx:if="{{isAddingDish}}">
+          <view class="filter-title">输入菜品名称</view>
+          <input class="dish-input" placeholder="输入菜品名称" value="{{tempDishName}}" bindinput="onTempDishNameInput" />
+        </view>
+        
+        <view class="filter-actions" wx:if="{{!isAddingDish}}">
+          <button class="clear-button" bindtap="resetFilters">重置</button>
+          <button class="apply-button" bindtap="applyFilters">确定</button>
+        </view>
+        
+        <view class="filter-actions" wx:if="{{isAddingDish}}">
+          <button class="add-button-popup" bindtap="addDishFromPopup">添加</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- Add Go Back button when showing surprise dishes -->
+    <view wx:if="{{filteredDishes.length === 2}}" class="back-button-container">
+      <button class="back-button" bindtap="resetDishes">返回全部菜品</button>
+    </view>
+
+    <!-- Add dish card -->
+    <view class="add-dish-card" wx:if="{{showAddCard}}">
+      <input class="dish-input" placeholder="输入菜品名称" value="{{newDishName}}" bindinput="onDishNameInput" />
+      
+      <view class="type-selector-add">
+        <view class="type-row">
+          <view class="type-option {{newDishType === 'beef' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="beef">
+            <image class="type-icon" src="/images/beef.png" mode="aspectFit"></image>
+          </view>
+          <view class="type-option {{newDishType === 'chicken' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="chicken">
+            <image class="type-icon" src="/images/chicken.png" mode="aspectFit"></image>
+          </view>
+          <view class="type-option {{newDishType === 'pork' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="pork">
+            <image class="type-icon" src="/images/pork.png" mode="aspectFit"></image>
+          </view>
+        </view>
+        <view class="type-row">
+          <view class="type-option {{newDishType === 'sheep' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="sheep">
+            <image class="type-icon" src="/images/sheep.png" mode="aspectFit"></image>
+          </view>
+          <view class="type-option {{newDishType === 'vegetable' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="vegetable">
+            <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
+          </view>
+          <view class="type-option {{newDishType === 'main' ? 'selected' : ''}}" bindtap="onNewDishTypeSelect" data-type="main">
+            <image class="type-icon" src="/images/main.png" mode="aspectFit"></image>
+          </view>
+        </view>
+      </view>
+
+      <view class="button-group">
+        <button class="cancel-button" bindtap="cancelAdd">取消</button>
+        <button class="confirm-button" bindtap="confirmAdd">确认</button>
+      </view>
+    </view>
+  </view>
+</scroll-view>

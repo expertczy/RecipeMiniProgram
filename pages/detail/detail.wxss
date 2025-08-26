@@ -1,0 +1,237 @@
+/* ... existing styles ... */
+
+page {
+  background-color: #f5f5f5;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  padding: 20rpx;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  max-width: 750rpx;
+  margin: 0 auto;
+}
+
+.dish-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+}
+
+/* Make the ingredients card expand to fill available space */
+.ingredients-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 400rpx;
+}
+
+.dish-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.dish-name {
+  font-size: 36rpx;
+  font-weight: 500;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.card-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.5;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-area {
+  width: 100%;
+  flex: 1;
+  min-height: 300rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  font-size: 32rpx;
+  line-height: 1.5;
+}
+
+.button-row {
+  display: flex;
+  gap: 20rpx;
+  width: 100%;
+}
+
+.save-button {
+  flex: 1;
+  background: #07c160 !important;
+  color: white;
+  border-radius: 8rpx;
+  height: 88rpx;
+  font-size: 32rpx;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.delete-button {
+  flex: 1;
+  background: #ff4d4f !important;
+  color: white;
+  border-radius: 8rpx;
+  height: 88rpx;
+  font-size: 32rpx;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.save-button::after,
+.delete-button::after {
+  border: none;
+}
+
+.type-tag {
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: white;
+}
+
+.type-tag.western {
+  background-color: #1890ff;
+}
+
+.type-tag.chinese {
+  background-color: #ff4d4f;
+}
+
+.type-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.type-row {
+  display: flex;
+  gap: 20rpx;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Add specific styling for the second row */
+.type-row:last-child {
+  padding-right: calc(100rpx + 20rpx);  /* Width of one type-option plus gap */
+}
+
+.type-option {
+  width: 100rpx;
+  height: 100rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx;
+  box-sizing: border-box;
+  flex: 1;
+  max-width: 120rpx;
+}
+
+.type-option.selected {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.type-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.dish-type {
+  font-size: 24rpx;
+  color: #666;
+  margin-left: 16rpx;
+}
+
+/* Source selector styles */
+.source-selector {
+  display: flex;
+  gap: 30rpx;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 10rpx 0;
+}
+
+.source-option {
+  width: 100rpx;
+  height: 100rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.source-option.selected {
+  border: 4rpx solid #07c160;
+}
+
+.source-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.buttons-card {
+  margin-bottom: 0;
+}
+
+/* 菜名编辑框样式 */
+.name-edit-container {
+  width: 100%;
+}
+
+.name-edit-area {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  font-size: 36rpx;
+  font-weight: 500;
+  min-height: 80rpx;
+  line-height: 1.5;
+  background-color: #fff;
+}

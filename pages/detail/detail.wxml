@@ -1,0 +1,147 @@
+<navigation-bar title="" back="{{true}}" color="black" background="#FFF" bind:back="onBeforeBack"></navigation-bar>
+<view class="container">
+  <!-- Name Card -->
+  <view class="dish-card">
+    <view class="dish-info">
+      <view wx:if="{{isEditingName}}" class="name-edit-container">
+        <textarea 
+          class="name-edit-area" 
+          value="{{dish.name}}" 
+          focus="{{isEditingName}}"
+          bindinput="onNameChange"
+          maxlength="30"
+          auto-height
+        ></textarea>
+      </view>
+      <text wx:else class="dish-name" bindtap="toggleNameEdit">{{dish.name}}</text>
+    </view>
+  </view>
+
+  <!-- Source Selection Card -->
+  <view class="dish-card">
+    <view class="source-selector">
+      <view 
+        class="source-option {{dish.image === '/images/Ricky.jpg' ? 'selected' : ''}}" 
+        bindtap="onSourceSelect" 
+        data-source="ricky"
+      >
+        <image class="source-icon" src="/images/Ricky.jpg" mode="aspectFill"></image>
+      </view>
+      <view 
+        class="source-option {{dish.image === '/images/EXPERT.jpg' ? 'selected' : ''}}" 
+        bindtap="onSourceSelect" 
+        data-source="expert"
+      >
+        <image class="source-icon" src="/images/EXPERT.jpg" mode="aspectFill"></image>
+      </view>
+      <view 
+        class="source-option {{dish.image === '/images/etc.png' ? 'selected' : ''}}" 
+        bindtap="onSourceSelect" 
+        data-source="pending"
+      >
+        <image class="source-icon" src="/images/etc.png" mode="aspectFill"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- Type Card -->
+  <view class="dish-card">
+    <view class="type-selector">
+      <view class="type-row">
+        <view 
+          class="type-option {{dish.type === 'beef' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="beef"
+          data-target="dish"
+        >
+          <image class="type-icon" src="/images/beef.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'chicken' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="chicken"
+          data-target="dish"
+        >
+          <image class="type-icon" src="/images/chicken.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'pork' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="pork"
+          data-target="dish"
+        >
+          <image class="type-icon" src="/images/pork.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'sheep' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="sheep"
+          data-target="dish"
+        >
+          <image class="type-icon" src="/images/sheep.png" mode="aspectFit"></image>
+        </view>
+      </view>
+
+      <view class="type-row">
+        <view 
+          class="type-option {{dish.type === 'seafood' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="seafood"
+          data-target="dish"
+        >
+          <image class="type-icon" src="/images/seafood.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'vegetable' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="vegetable"
+          data-target="dish"
+        >
+          <image class="type-icon" src="/images/vegetable.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'main' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="main"
+          data-target="dish"
+        >
+          <image class="type-icon" src="/images/main.png" mode="aspectFit"></image>
+        </view>
+        <view 
+          class="type-option {{dish.type === 'drink' ? 'selected' : ''}}" 
+          bindtap="onTypeSelect" 
+          data-type="drink"
+          data-target="dish"
+        >
+          <image class="type-icon" src="/images/drink.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Ingredients Card - Now with flex-grow to fill available space -->
+  <view class="dish-card ingredients-card">
+    <view class="card-title">食材/步骤</view>
+    <view class="card-content">
+      <textarea 
+        class="edit-area" 
+        value="{{dish.ingredients}}" 
+        placeholder="请输入食材/步骤" 
+        bindinput="onIngredientsChange"
+        disabled="{{isLoading}}"
+      ></textarea>
+    </view>
+  </view>
+
+  <!-- Buttons Card -->
+  <view class="dish-card buttons-card">
+    <view class="button-row">
+      <button class="save-button" bindtap="saveDish" disabled="{{isLoading}}">
+        {{isLoading ? '保存中...' : '保存'}}
+      </button>
+      <button class="delete-button" bindtap="deleteDish" disabled="{{isLoading}}">
+        {{isLoading ? '删除中...' : '删除'}}
+      </button>
+    </view>
+  </view>
+</view>

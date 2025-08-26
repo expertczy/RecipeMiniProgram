@@ -1,0 +1,613 @@
+page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.scrollarea {
+  flex: 1;
+  overflow-y: hidden;
+}
+
+.container {
+  padding: 20rpx;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.form {
+  width: 100%;
+  padding: 30rpx;
+  box-sizing: border-box;
+  background: white;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.input-row {
+  display: flex;
+  gap: 20rpx;
+  align-items: center;
+  min-height: 80rpx;
+}
+
+.input {
+  flex: 1;
+  height: 80rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+}
+
+.image-button {
+  width: 80rpx !important;
+  height: 80rpx;
+  padding: 0 !important;
+  margin: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5 !important;
+  border-radius: 8rpx;
+}
+
+.icon-wrapper {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+}
+
+/* Separate styles for dish card user icon */
+.dish-item .user-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 8rpx;
+  object-fit: cover;
+}
+
+/* Search and filter card icons */
+.input-row .user-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-button::after {
+  border: none;
+}
+
+.add-button {
+  width: 80rpx !important;
+  height: 80rpx;
+  border-radius: 8rpx;
+  padding: 0 !important;
+  margin: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  background: #07c160 !important;
+  color: white;
+}
+
+.add-button::after {
+  border: none;
+}
+
+.dishes-list {
+  width: 100%;
+  max-width: 750rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Type section styles */
+.type-section {
+  width: 100%;
+  margin-bottom: 30rpx;
+}
+
+.type-header {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx 16rpx 0 0;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.type-header-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+}
+
+.type-header-text {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+}
+
+.expand-button {
+  padding: 10rpx 20rpx;
+  background-color: #f5f5f5;
+  border-radius: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expand-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.type-dishes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 0 0 16rpx 16rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.dish-item {
+  width: 48%; /* Slightly less than 50% to allow for spacing */
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  background: white;
+  border-radius: 16rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.dish-content {
+  flex: 1;
+  margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.dish-name {
+  font-size: 32rpx;
+  color: #333;
+}
+
+.delete-btn {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 8rpx;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.delete-btn:active {
+  opacity: 0.7;
+}
+
+.sync-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+  width: 100%;
+}
+
+.sync-button {
+  flex: 1;
+  height: 80rpx;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload {
+  background: #1890ff !important;
+  color: white;
+}
+
+.download {
+  background: #52c41a !important;
+  color: white;
+}
+
+.sync-button::after {
+  border: none;
+}
+
+.api-button {
+  margin-top: 20rpx;
+  width: 100% !important;
+  height: 80rpx;
+  font-size: 28rpx;
+  background: #1890ff !important;
+  color: white;
+  border-radius: 8rpx;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.api-button.loading {
+  background: #91caff !important;
+  opacity: 0.7;
+}
+
+.api-button::after {
+  border: none;
+}
+
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: 40rpx;
+}
+
+.type-icon {
+  width: 80rpx;
+  height: 80rpx;
+  object-fit: contain;
+}
+
+.filter-button {
+  width: 80rpx !important;
+  height: 80rpx;
+  padding: 16rpx !important;
+  margin: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5 !important;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+}
+
+.filter-button::after, .surprise-button::after {
+  border: none;
+}
+
+.filter-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.surprise-button {
+  font-size: 40rpx;
+}
+
+/* Type filter popup styles */
+.type-filter-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.type-filter-content {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  width: 80%;
+  max-width: 600rpx;
+}
+
+.type-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 30rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.type-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  padding: 15rpx;
+  width: 25%; /* 简单的25%宽度，不使用calc */
+  box-sizing: border-box;
+}
+
+.type-label {
+  font-size: 24rpx;
+  color: #666;
+  text-align: center;
+}
+
+.type-option.selected {
+  background-color: #f0f0f0;
+  border-radius: 8rpx;
+}
+
+.clear-button {
+  width: 100% !important;
+  height: 80rpx;
+  background: #f5f5f5 !important;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.clear-button::after {
+  border: none;
+}
+
+.back-button-container {
+  padding: 20rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.back-button {
+  background-color: #007AFF;
+  color: white;
+  padding: 20rpx 40rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+}
+
+/* Add these new styles for user-specific backgrounds */
+.dish-item.ricky-dish {
+  background-color: #fff9e6; /* Light yellow background for Ricky */
+}
+
+.dish-item.expert-dish {
+  background-color: #e6f7ff; /* Light blue background for Expert */
+}
+
+.user-filter {
+  display: flex;
+  gap: 10rpx;
+}
+
+.filter-button {
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+  border-radius: 30rpx;
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.filter-button.active {
+  background-color: #07c160;
+  color: white;
+}
+
+.icon-user:before {
+  content: "\e7ae"; /* Use an appropriate icon code from your iconfont library */
+}
+
+.image-button.active {
+  border: 2rpx solid #07c160;
+}
+
+.user-filter-indicator {
+  position: absolute;
+  bottom: -5rpx;
+  right: -5rpx;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background-color: #07c160;
+}
+
+.filter-section {
+  margin-bottom: 30rpx;
+}
+
+.filter-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  margin-bottom: 20rpx;
+  color: #333;
+}
+
+.user-filter-grid {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.user-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  padding: 15rpx;
+  border-radius: 8rpx;
+  min-width: 100rpx;
+}
+
+.user-option.selected {
+  background-color: #f0f0f0;
+}
+
+.user-filter-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 20rpx;
+  justify-content: space-between;
+  margin-top: 30rpx;
+  width: 100%;
+}
+
+.clear-button, .apply-button {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.clear-button {
+  background: #f5f5f5 !important;
+  color: #333;
+}
+
+.apply-button {
+  background: #07c160 !important;
+  color: white;
+  width: 100%;
+}
+
+.clear-button::after, .apply-button::after {
+  border: none;
+}
+
+/* Add Dish Button */
+.add-dish-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.add-dish-button {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+.add-button-popup {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 8rpx;
+  padding: 0;
+  font-size: 28rpx;
+  border: none;
+  height: 80rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dish-input {
+  width: 100%;
+  height: 80rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.add-dish-button-inline {
+  width: 80rpx !important;
+  height: 80rpx;
+  padding: 0 !important;
+  margin: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  background: #4CAF50 !important;
+  color: white;
+  border-radius: 8rpx;
+  border: none;
+}
+
+.add-dish-button-inline::after {
+  border: none;
+}
+
+.required-indicator {
+  color: #ff4d4f;
+  margin-left: 5rpx;
+}
+
+/* Pending Dishes Card Styles */
+.pending-dishes-card {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.pending-header {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background-color: #ffffff;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.pending-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+}
+
+.pending-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.pending-dishes-list {
+  padding: 20rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.pending-dish-item {
+  width: 48%;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  background: #f5f5f5;
+  border-radius: 16rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
