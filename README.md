@@ -26,28 +26,6 @@
 - **Database**: DynamoDB for recipe storage
 - **Deployment**: Serverless architecture on AWS
 
-### 📁 Project Structure
-
-```
-RecipeMiniProgram/
-├── app.js                 # Main application entry point
-├── app.json              # App configuration and pages
-├── app.wxss              # Global styles
-├── components/           # Reusable UI components
-│   └── navigation-bar/   # Custom navigation component
-├── config/               # Configuration files
-│   ├── config.js         # Main configuration (not in git)
-│   ├── config.example.js # Example configuration
-│   └── README.md         # Configuration guide
-├── images/               # Recipe category and UI images
-├── pages/                # Application pages
-│   ├── index/           # Main recipe listing page
-│   └── detail/          # Recipe detail page
-├── utils/                # Utility functions
-│   └── api.js           # API integration layer
-└── project.config.json   # WeChat Developer Tools configuration
-```
-
 ### 🚀 Getting Started
 
 #### Prerequisites
@@ -175,28 +153,6 @@ This project is licensed under the MIT License.
 - **后端**: 基于 AWS Lambda 和 API Gateway
 - **数据库**: DynamoDB 用于菜谱存储
 - **部署**: AWS 无服务器架构
-
-### 📁 项目结构
-
-```
-RecipeMiniProgram/
-├── app.js                 # 主应用程序入口点
-├── app.json              # 应用配置和页面
-├── app.wxss              # 全局样式
-├── components/           # 可重用UI组件
-│   └── navigation-bar/   # 自定义导航组件
-├── config/               # 配置文件
-│   ├── config.js         # 主配置文件（不在git中）
-│   ├── config.example.js # 示例配置文件
-│   └── README.md         # 配置指南
-├── images/               # 菜谱类别和UI图片
-├── pages/                # 应用页面
-│   ├── index/           # 主菜谱列表页面
-│   └── detail/          # 菜谱详情页面
-├── utils/                # 工具函数
-│   └── api.js           # API集成层
-└── project.config.json   # 微信开发者工具配置
-```
 
 ### 🚀 快速开始
 
