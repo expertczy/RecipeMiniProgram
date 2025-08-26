@@ -1,5 +1,7 @@
 # Recipe Mini Program 菜谱小程序
 
+![Demo](demo.gif)
+
 [English](#english) | [中文](#chinese)
 
 ---
