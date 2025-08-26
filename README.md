@@ -119,17 +119,6 @@ The application integrates with AWS backend services:
 3. Set up DynamoDB tables
 4. Configure CORS and security settings
 
-### 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-### 📄 License
-
-This project is licensed under the MIT License.
-
 ---
 
 ## Chinese
@@ -247,29 +236,3 @@ This project is licensed under the MIT License.
 3. 设置DynamoDB表
 4. 配置CORS和安全设置
 
-### 🤝 贡献指南
-
-1. Fork 仓库
-2. 创建功能分支
-3. 进行你的更改
-4. 提交拉取请求
-
-### 📄 许可证
-
-本项目采用 MIT 许可证。
-
----
-
-## 📞 Support 支持
-
-For support and questions, please contact:  
-如需支持和问题咨询，请联系：
-
-- **Email**: [your-email@example.com]
-- **WeChat**: [your-wechat-id]
-- **GitHub Issues**: [repository-issues-url]
-
----
-
-*Last updated: December 2024*  
-*最后更新: 2024年12月*
