@@ -1,6 +1,8 @@
 # Recipe Mini Program 菜谱小程序
 
-![Demo](demo.gif)
+<p align="center">
+  <img src="./demo.gif" width="300" />
+</p>
 
 [English](#english) | [中文](#chinese)
 
